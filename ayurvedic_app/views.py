@@ -144,11 +144,12 @@ def search_users(request):
 def admin_remedies(request):
     return render(request, "adminremedies.html")
 
-def admin_upload(request):
-    user_name = request.POST.get('name')
-    user_email = request.POST.get('email')
+def admin_upload(request, id):
+    admins = admin.objects.get(id = id)
+    # user_name = request.POST.get("")
+    user_email = request.POST.get(admins.email)
     name = request.POST.get('remedy_name')
-    issues = request.POST.get('issue')
+    issues = request.POST.get('issues')
     solution = request.POST.get('solutions')
     img = request.FILES.get('remedy_image')
     video = request.FILES.get('remedy_video')
