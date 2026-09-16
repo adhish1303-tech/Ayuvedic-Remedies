@@ -1,0 +1,285 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register | Health couch.</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        :root {
+            --register-green: #5aac4e;
+            --register-dark: #0d210b;
+            --register-soft: #eaf8e8;
+            --register-border: #d8e8d5;
+        }
+
+        .register-page {
+            min-height: calc(100vh - 82px);
+            display: flex;
+            align-items: center;
+            padding: 64px 24px;
+            background: #f7fbf6;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-page::before {
+            content: "";
+            position: absolute;
+            width: 430px;
+            height: 430px;
+            border-radius: 50%;
+            background: var(--register-soft);
+            top: -205px;
+            left: -130px;
+        }
+
+        .register-shell {
+            width: min(1080px, 100%);
+            min-height: 600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.02fr .98fr;
+            background: #fff;
+            box-shadow: 0 20px 55px rgba(13, 33, 11, .12);
+            position: relative;
+            z-index: 1;
+        }
+
+        .register-intro {
+            min-height: 600px;
+            padding: 72px 64px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background: var(--register-soft) url("{% static 'img/hero/hero2.png' %}") center / cover no-repeat;
+        }
+
+        .register-kicker {
+            color: var(--register-green);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .register-intro h1 {
+            max-width: 430px;
+            color: var(--register-dark);
+            font-size: clamp(38px, 4vw, 56px);
+            line-height: 1.08;
+            margin-bottom: 20px;
+        }
+
+        .register-intro p {
+            max-width: 390px;
+            color: #315d35;
+            line-height: 1.75;
+            margin: 0;
+        }
+
+        .register-form-panel {
+            display: flex;
+            align-items: center;
+            padding: 58px 72px;
+        }
+
+        .register-form-wrap {
+            width: 100%;
+        }
+
+        .register-form-panel h2 {
+            color: var(--register-dark);
+            font-size: 34px;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .register-subtitle {
+            color: #6c806c;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .register-field {
+            margin-bottom: 18px;
+        }
+
+        .register-field label {
+            display: block;
+            color: var(--register-dark);
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .register-field input {
+            width: 100%;
+            height: 50px;
+            border: 1px solid var(--register-border);
+            border-radius: 0;
+            color: var(--register-dark);
+            background: #fbfefb;
+            padding: 0 16px;
+            font-family: "Poppins", sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border-color .2s ease, box-shadow .2s ease;
+        }
+
+        .register-field input:focus {
+            border-color: var(--register-green);
+            box-shadow: 0 0 0 3px rgba(90, 172, 78, .14);
+        }
+
+        .register-submit {
+            width: 100%;
+            height: 54px;
+            border: 0;
+            border-radius: 0 0 18px 0;
+            background: var(--register-green);
+            color: #fff;
+            cursor: pointer;
+            font-family: "Poppins", sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: background .2s ease, transform .2s ease;
+        }
+
+        .register-submit:hover {
+            background: #397e35;
+            transform: translateY(-2px);
+        }
+
+        .register-login {
+            display: block;
+            color: #6c806c;
+            font-size: 13px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .register-login a {
+            color: var(--register-green) !important;
+        }
+
+        @media (max-width: 991px) {
+            .register-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .register-intro {
+                min-height: 340px;
+                padding: 52px 48px;
+                background-position: center 40%;
+            }
+
+            .register-form-panel {
+                padding: 52px 48px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .register-page {
+                min-height: calc(100vh - 60px);
+                padding: 32px 15px;
+            }
+
+            .register-intro {
+                min-height: 290px;
+                padding: 38px 28px;
+                background-position: 68% center;
+            }
+
+            .register-intro h1 {
+                font-size: 36px;
+            }
+
+            .register-form-panel {
+                padding: 38px 28px 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-area"><div class="main-header header-sticky"><div class="container-fluid"><div class="row align-items-center">
+            <div class="col-xl-2 col-lg-2 col-md-1">
+                <div class="logo"><a href="{% url 'indexpage' %}">
+                    <img src="{% static 'img/logo/logo.png' %}" alt="Health couch."></a>
+                </div>
+            </div>
+            <div class="col-xl-10 col-lg-10 col-md-10">
+                <div class="menu-main d-flex align-items-center justify-content-end">
+                    <div class="main-menu f-right d-none d-lg-block">
+                        <nav>
+                            <ul id="navigation">
+                                <li><a href="{% url 'indexpage' %}">Home</a>
+                                </li><li><a href="{% url 'aboutpage' %}">About</a></li>
+                                <li><a href="{% url 'servicespage' %}">Services</a></li>
+                                <li><a href="{% url 'blogpage' %}">Blog</a></li>
+                                <li><a href="{% url 'contactpage' %}">Contact</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="header-right-btn f-right d-none d-lg-block ml-15">
+                        <a href="{% url 'loginpage' %}" class="btn header-btn">Login</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="mobile_menu d-block d-lg-none">
+
+                </div>
+            </div>
+        </div></div></div>
+    </header>
+    <main class="register-page">
+        <div class="register-shell">
+            <section class="register-intro" aria-label="Health couch introduction">
+                <span class="register-kicker">Health couch.</span>
+                <h1>Begin your journey to better health.</h1>
+                <p>Create an account and discover simple, natural Ayurvedic care for everyday wellbeing.</p>
+            </section>
+
+            <section class="register-form-panel">
+                <div class="register-form-wrap">
+                    <h2>Create an account</h2>
+                    <p class="register-subtitle">Join us for a healthier life, inspired by nature.</p>
+
+                    <form action="{% url 'registrationpage' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="register-field">
+                            <label for="name">Full name</label>
+                            <input type="text" id="name" name="name" autocomplete="name" required>
+                        </div>
+                        <div class="register-field">
+                            <label for="email">Email address</label>
+                            <input type="email" id="email" name="email" autocomplete="email" required>
+                        </div>
+                        <div class="register-field">
+                            <label for="contact">Contact number</label>
+                            <input type="tel" id="contact" name="contact" autocomplete="tel" required>
+                        </div>
+                        <div class="register-field">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" autocomplete="new-password" required>
+                        </div>
+                        <button class="register-submit" type="submit">Register</button>
+                    </form>
+
+                    <span class="register-login">
+                        Already have an account?
+                        <a href="{% url 'loginpage' %}">Log in</a>
+                    </span>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

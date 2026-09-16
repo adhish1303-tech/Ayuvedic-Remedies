@@ -1,0 +1,1003 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>My Accounts | Health couch</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/gijgo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animated-headline.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <!-- Custom Dashboard CSS -->
+    <style>
+        :root {
+            --primary-green: #6CAA3D;
+            --dark-green: #5a8e34;
+            --light-green: #f0f5eb;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #27ae60;
+            --pending-color: #f39c12;
+            --warning-color: #e74c3c;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        /* Header Customization */
+        .header-area {
+            background-color: var(--white);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-btn {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .header-btn:hover {
+            background-color: var(--dark-green);
+            color: var(--white);
+        }
+
+        /* Breadcrumb and Page Header */
+        .page-header-area {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            color: var(--white);
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+
+        .page-header-area h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .breadcrumb-item {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .breadcrumb-item.active {
+            color: var(--white);
+        }
+
+        .breadcrumb-item a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .breadcrumb-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dashboard Container */
+        .dashboard-container {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Sidebar Navigation */
+        .dashboard-sidebar {
+            margin-bottom: 30px;
+        }
+
+        .dashboard-sidebar .nav-tabs {
+            border-bottom: 2px solid var(--border-color);
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-sidebar .nav-link {
+            color: var(--text-dark);
+            border: none;
+            padding: 15px 20px;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-sidebar .nav-link:hover {
+            color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+        }
+
+        .dashboard-sidebar .nav-link.active {
+            color: var(--white);
+            background-color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+            border-radius: 5px 5px 0 0;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* My Details Section */
+        .details-card {
+            background-color: var(--light-green);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary-green);
+        }
+
+        .details-card h3 {
+            color: var(--primary-green);
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .details-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .details-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .detail-item {
+            background-color: var(--white);
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+        }
+
+        .detail-item label {
+            color: var(--text-dark);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .detail-item p {
+            color: var(--text-light);
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .edit-btn {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .edit-btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 170, 61, 0.3);
+        }
+
+        /* Filters Section */
+        .filters-section {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--white);
+            color: var(--text-dark);
+            border: 2px solid var(--border-color);
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border-color: var(--primary-green);
+        }
+
+        /* Remedies Cards */
+        .remedies-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .remedies-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .remedy-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--primary-green);
+        }
+
+        .remedy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .remedy-card-header {
+            padding: 20px;
+            background-color: var(--light-green);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .remedy-card-header h4 {
+            color: var(--primary-green);
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            font-size: 18px;
+        }
+
+        .remedy-card-body {
+            padding: 20px;
+        }
+
+        .remedy-card-body p {
+            color: var(--text-light);
+            margin: 0 0 15px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .remedy-status {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .remedy-status.approved {
+            background-color: #d4edda;
+            color: var(--success-color);
+        }
+
+        .remedy-status.pending {
+            background-color: #fff3cd;
+            color: var(--pending-color);
+        }
+
+        .remedy-status.rejected {
+            background-color: #f8d7da;
+            color: var(--warning-color);
+        }
+
+        .remedy-details {
+            background-color: var(--light-green);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .remedy-details strong {
+            color: var(--primary-green);
+        }
+
+        .remedy-card-footer {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .remedy-btn {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .remedy-btn:hover {
+            background-color: var(--dark-green);
+        }
+
+        .remedy-btn.secondary {
+            background-color: var(--white);
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+        }
+
+        .remedy-btn.secondary:hover {
+            background-color: var(--light-green);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: var(--light-green);
+            border-radius: 10px;
+        }
+
+        .empty-state i {
+            font-size: 60px;
+            color: var(--primary-green);
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        /* Services Section (from landing page) */
+        .services-section {
+            background-color: var(--light-green);
+            padding: 60px 0;
+            margin-top: 40px;
+        }
+
+        .services-section h2 {
+            color: var(--text-dark);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 32px;
+        }
+
+        .service-card {
+            background-color: var(--primary-green);
+            color: var(--white);
+            padding: 40px 25px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(108, 170, 61, 0.2);
+        }
+
+        .service-card i {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+        }
+
+        .service-card h4 {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .service-card p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .service-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: var(--white);
+            font-size: 24px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .service-btn:hover {
+            background-color: var(--white);
+            color: var(--primary-green);
+        }
+
+        /* Footer */
+        .footer-area {
+            background-color: var(--text-dark);
+            color: var(--white);
+            padding: 40px 0 20px 0;
+            margin-top: 60px;
+        }
+
+        .footer-area h4 {
+            color: var(--primary-green);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-area ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-area ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-area ul li a {
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-area ul li a:hover {
+            color: var(--primary-green);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        /* Utility Classes */
+        .text-primary {
+            color: var(--primary-green);
+        }
+
+        .badge-success {
+            background-color: var(--success-color);
+            color: var(--white);
+        }
+
+        .badge-pending {
+            background-color: var(--pending-color);
+            color: var(--white);
+        }
+
+        .btn-green {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+        }
+
+        .btn-green:hover {
+            background-color: var(--dark-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- ? Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{% static 'img/logo/loder.png' %}" alt="">
+                </div>  
+            </div>
+        </div>
+    </div>
+    <!-- Preloader End -->
+
+    <header>
+        <!--? Header Start -->
+        <div class="header-area">
+            <div class="main-header header-sticky">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <!-- Logo -->
+                        <div class="col-xl-2 col-lg-2 col-md-1">
+                            <div class="logo">
+                                <a href="{% url 'indexpage' %}"><img src="{% static 'img/logo/logo.png' %}" alt="Health couch"></a>
+                            </div>
+                        </div>
+                        <div class="col-xl-10 col-lg-10 col-md-10">
+                            <div class="menu-main d-flex align-items-center justify-content-end">
+                                <!-- Main-menu -->
+                                <div class="main-menu f-right d-none d-lg-block">
+                                    <nav> 
+                                        <ul id="navigation">
+                                            <li><a href="{% url 'indexpage' %}">Home</a></li>
+                                            <li><a href="{% url 'aboutpage' %}">About</a></li>
+                                            <li><a href="{% url 'servicespage' %}">Services</a></li>
+                                            <li><a href="{% url 'blogpage' %}">Blog</a>
+                                                <ul class="submenu">
+                                                    <li><a href="{% url 'blogpage' %}">Blog</a></li>
+                                                    <li><a href="blog_details.html">Blog Details</a></li>
+                                                    <li><a href="elements.html">Element</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="{% url 'contactpage' %}">Contact</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="header-right-btn f-right d-none d-lg-block ml-15">
+                                    <a href="{% url 'logout_view' %}" class="btn header-btn">Logout</a>
+                                </div>
+                            </div>
+                        </div>   
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <div class="page-header-area">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <h1>My Accounts</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'indexpage' %}">Home</a></li>
+                                <li class="breadcrumb-item active">My Accounts</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Container -->
+        <div class="container">
+            <div class="dashboard-container">
+                <!-- Navigation Tabs -->
+                <div class="dashboard-sidebar">
+                    <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="my-details-tab" data-bs-toggle="tab" data-bs-target="#my-details" type="button" role="tab" aria-controls="my-details" aria-selected="true">
+                                <i class="fas fa-user-circle"></i> My Details
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="remedies-tab" data-bs-toggle="tab" data-bs-target="#remedies" type="button" role="tab" aria-controls="remedies" aria-selected="false">
+                                <i class="fas fa-leaf"></i> User Suggested Remedies
+                            </button>
+                        </li>
+                        <form action= "{% url 'useremediespage' %}" method = "POST">
+                            {% csrf_token %}
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="remedies-tab" data-bs-toggle="tab" data-bs-target="#remedies" type="submit" role="tab" aria-controls="remedies" aria-selected="false">
+                                <i class="fas fa-leaf"></i> Upload Remedies
+                            </button>
+                        </form>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="dashboardTabContent">
+                    
+                    <!-- My Details Tab -->
+                    <div class="tab-pane fade show active" id="my-details" role="tabpanel" aria-labelledby="my-details-tab">
+                        <div class="details-card">
+                            <h3><i class="fas fa-user-circle"></i> Your Profile Information</h3>
+
+                            <div class="details-row">
+                                <div class="detail-item">
+                                    <label>Full Name</label>
+                                    <p>{{ users.Name }}</p>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Email Address</label>
+                                    <p>{{ users.Email }}</p>
+                                </div>
+                            </div>
+
+                            <div class="details-row">
+                                <div class="detail-item">
+                                    <label>Phone Number</label>
+                                    <p>+91 {{ users.Contact }}</p>
+                                </div>
+                                <form action="{% url 'updatepage' %}" method="POST">
+                                    {% csrf_token %}
+                        <button class="edit-btn" type="submit">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </button>
+                    </form>
+                    </div>
+
+                    {% comment %} <!-- User Suggested Remedies Tab -->
+                    <div class="tab-pane fade" id="remedies" role="tabpanel" aria-labelledby="remedies-tab">
+                        <h3 style="color: var(--text-dark); font-weight: 700; margin-bottom: 30px;">
+                            <i class="fas fa-leaf" style="color: var(--primary-green); margin-right: 10px;"></i>User Suggested Remedies
+                        </h3>
+
+                        <!-- Filter Buttons -->
+                        <div class="filters-section">
+                            <button class="filter-btn active" data-filter="all">
+                                <i class="fas fa-list"></i> All Remedies
+                            </button>
+                            <button class="filter-btn" data-filter="approved">
+                                <i class="fas fa-check-circle"></i> Approved
+                            </button>
+                            <button class="filter-btn" data-filter="pending">
+                                <i class="fas fa-clock"></i> Pending
+                            </button>
+                        </div>
+
+                        <!-- Remedies Cards Container -->
+                        <div class="remedies-container">
+                            
+                            <!-- Remedy Card 1 - Approved -->
+                            <div class="remedy-card" data-status="approved">
+                                <div class="remedy-card-header">
+                                    <h4>Turmeric & Milk Remedy</h4>
+                                    <span class="remedy-status approved">
+                                        <i class="fas fa-check-circle"></i> Approved
+                                    </span>
+                                </div>
+                                <div class="remedy-card-body">
+                                    <p>A traditional Ayurvedic remedy combining turmeric with warm milk to boost immunity and reduce inflammation.</p>
+                                    <div class="remedy-details">
+                                        <strong>Suggested by:</strong> Dr. Rajesh Sharma<br>
+                                        <strong>Submitted Date:</strong> March 15, 2024<br>
+                                        <strong>Approved Date:</strong> March 20, 2024
+                                    </div>
+                                </div>
+                                <div class="remedy-card-footer">
+                                    <button class="remedy-btn">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </button>
+                                    <button class="remedy-btn secondary">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Remedy Card 2 - Approved -->
+                            <div class="remedy-card" data-status="approved">
+                                <div class="remedy-card-header">
+                                    <h4>Ashwagandha Powder Mix</h4>
+                                    <span class="remedy-status approved">
+                                        <i class="fas fa-check-circle"></i> Approved
+                                    </span>
+                                </div>
+                                <div class="remedy-card-body">
+                                    <p>A powerful adaptogenic remedy combining ashwagandha with honey for stress relief and better sleep quality.</p>
+                                    <div class="remedy-details">
+                                        <strong>Suggested by:</strong> Dr. Priya Patel<br>
+                                        <strong>Submitted Date:</strong> March 10, 2024<br>
+                                        <strong>Approved Date:</strong> March 18, 2024
+                                    </div>
+                                </div>
+                                <div class="remedy-card-footer">
+                                    <button class="remedy-btn">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </button>
+                                    <button class="remedy-btn secondary">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Remedy Card 3 - Pending -->
+                            <div class="remedy-card" data-status="pending">
+                                <div class="remedy-card-header">
+                                    <h4>Ginger & Lemon Tea</h4>
+                                    <span class="remedy-status pending">
+                                        <i class="fas fa-hourglass-half"></i> Pending Review
+                                    </span>
+                                </div>
+                                <div class="remedy-card-body">
+                                    <p>A refreshing remedy combining fresh ginger with lemon for digestive health and immune system support.</p>
+                                    <div class="remedy-details">
+                                        <strong>Suggested by:</strong> Dr. Arjun Singh<br>
+                                        <strong>Submitted Date:</strong> March 22, 2024<br>
+                                        <strong>Status:</strong> Under Review
+                                    </div>
+                                </div>
+                                <div class="remedy-card-footer">
+                                    <button class="remedy-btn">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </button>
+                                    <button class="remedy-btn secondary">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Remedy Card 4 - Approved -->
+                            <div class="remedy-card" data-status="approved">
+                                <div class="remedy-card-header">
+                                    <h4>Brahmi Oil Massage</h4>
+                                    <span class="remedy-status approved">
+                                        <i class="fas fa-check-circle"></i> Approved
+                                    </span>
+                                </div>
+                                <div class="remedy-card-body">
+                                    <p>A relaxing oil massage treatment using brahmi herb to enhance mental clarity and improve hair health.</p>
+                                    <div class="remedy-details">
+                                        <strong>Suggested by:</strong> Dr. Anjali Reddy<br>
+                                        <strong>Submitted Date:</strong> February 28, 2024<br>
+                                        <strong>Approved Date:</strong> March 05, 2024
+                                    </div>
+                                </div>
+                                <div class="remedy-card-footer">
+                                    <button class="remedy-btn">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </button>
+                                    <button class="remedy-btn secondary">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Remedy Card 5 - Pending -->
+                            <div class="remedy-card" data-status="pending">
+                                <div class="remedy-card-header">
+                                    <h4>Neem Paste Treatment</h4>
+                                    <span class="remedy-status pending">
+                                        <i class="fas fa-hourglass-half"></i> Pending Review
+                                    </span>
+                                </div>
+                                <div class="remedy-card-body">
+                                    <p>A natural antibacterial remedy using neem paste for skin purification and acne treatment.</p>
+                                    <div class="remedy-details">
+                                        <strong>Suggested by:</strong> Dr. Deepak Verma<br>
+                                        <strong>Submitted Date:</strong> March 21, 2024<br>
+                                        <strong>Status:</strong> Under Review
+                                    </div>
+                                </div>
+                                <div class="remedy-card-footer">
+                                    <button class="remedy-btn">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </button>
+                                    <button class="remedy-btn secondary">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Remedy Card 6 - Approved -->
+                            <div class="remedy-card" data-status="approved">
+                                <div class="remedy-card-header">
+                                    <h4>Triphala Detox Blend</h4>
+                                    <span class="remedy-status approved">
+                                        <i class="fas fa-check-circle"></i> Approved
+                                    </span>
+                                </div>
+                                <div class="remedy-card-body">
+                                    <p>An ancient Ayurvedic blend of three fruits for detoxification and promoting natural digestive health.</p>
+                                    <div class="remedy-details">
+                                        <strong>Suggested by:</strong> Dr. Vikram Kumar<br>
+                                        <strong>Submitted Date:</strong> March 05, 2024<br>
+                                        <strong>Approved Date:</strong> March 12, 2024
+                                    </div>
+                                </div>
+                                <div class="remedy-card-footer">
+                                    <button class="remedy-btn">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </button>
+                                    <button class="remedy-btn secondary">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {% endcomment %}
+
+            <!-- Services Section (from landing page) -->
+            <section class="services-section">
+                <div class="container">
+                    <h2>Our Services</h2>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="service-card">
+                                <i class="fas fa-heartbeat"></i>
+                                <h4>Physical Activity</h4>
+                                <p>Personalized fitness plans tailored to your Ayurvedic constitution and health goals.</p>
+                                <button class="service-btn">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="service-card">
+                                <i class="fas fa-leaf"></i>
+                                <h4>Herbal Remedies</h4>
+                                <p>Natural and scientifically-backed herbal treatments for various health conditions.</p>
+                                <button class="service-btn">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="service-card">
+                                <i class="fas fa-spa"></i>
+                                <h4>Meditation & Wellness</h4>
+                                <p>Guided meditation and mindfulness programs for mental and emotional wellbeing.</p>
+                                <button class="service-btn">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row pt-50 pb-50">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>About Health couch</h4>
+                    <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 15px;">Committed to providing holistic health solutions through Ayurvedic wisdom and modern science.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="{% url 'indexpage' %}">Home</a></li>
+                        <li><a href="{% url 'aboutpage' %}">About Us</a></li>
+                        <li><a href="{% url 'servicespage' %}">Services</a></li>
+                        <li><a href="{% url 'contactpage' %}">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Follow Us</h4>
+                    <ul>
+                        <li><a href="javascript:void(0)">Facebook</a></li>
+                        <li><a href="javascript:void(0)">Instagram</a></li>
+                        <li><a href="javascript:void(0)">Twitter</a></li>
+                        <li><a href="javascript:void(0)">LinkedIn</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Contact Info</h4>
+                    <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 10px;"><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p style="color: rgba(255, 255, 255, 0.8);"><i class="fas fa-envelope"></i> info@healthcouch.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Health couch. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Filter Functionality -->
+    <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script>
+        // Filter functionality for remedies
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const remedyCards = document.querySelectorAll('.remedy-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    const filter = this.getAttribute('data-filter');
+
+                    remedyCards.forEach(card => {
+                        if (filter === 'all') {
+                            card.style.display = 'block';
+                        } else {
+                            const status = card.getAttribute('data-status');
+                            if (status === filter) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+        });
+
+        // Edit Profile button functionality
+        document.querySelector('.edit-btn').addEventListener('click', function() {
+            alert('Edit Profile functionality will be implemented with backend integration.');
+        });
+
+        // Preloader
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader-active');
+            if (preloader) {
+                preloader.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health couch. — Admin dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest-950: #122019;
+    --forest-900: #16281f;
+    --forest-800: #1f3b2c;
+    --forest-700: #2a4a37;
+    --leaf-500: #5a9b47;
+    --leaf-600: #4a8239;
+    --leaf-100: #e7f3e1;
+    --cream-50: #f8f6ef;
+    --cream-100: #f1eee3;
+    --clay-400: #c9a15a;
+    --clay-100: #f7ecd6;
+    --rust-500: #c05a3d;
+    --rust-100: #f8e4de;
+    --ink-900: #1c2620;
+    --ink-600: #52625a;
+    --ink-400: #8b968f;
+    --line: rgba(28,38,32,0.10);
+    --line-dark: rgba(255,255,255,0.10);
+  }
+
+  *{ box-sizing: border-box; }
+  html, body{
+    margin: 0; padding: 0;
+    height: 100%;
+    background: var(--cream-100);
+    color: var(--ink-900);
+    font-family: 'Inter', sans-serif;
+  }
+  h1, h2, h3, .wordmark{ font-family: 'Quicksand', sans-serif; }
+  button{ font-family: inherit; }
+  ul{ list-style: none; margin: 0; padding: 0; }
+
+  /* ---------------- App shell ---------------- */
+
+  .app{
+    display: grid;
+    grid-template-columns: 258px 1fr;
+    grid-template-areas: "sidebar main";
+    min-height: 100vh;
+  }
+
+  /* ---------------- Sidebar ---------------- */
+
+  .sidebar{
+    grid-area: sidebar;
+    background: radial-gradient(140% 120% at 10% 0%, var(--forest-800) 0%, var(--forest-950) 60%);
+    color: var(--cream-50);
+    display: flex;
+    flex-direction: column;
+    padding: 26px 18px 18px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+
+  .brand{
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 0 8px 24px;
+    font-weight: 700;
+    font-size: 19px;
+  }
+  .brand .dot{ color: var(--leaf-500); }
+  .brand .badge{
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--forest-950);
+    background: var(--leaf-500);
+    padding: 2.5px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
+
+  .nav-label{
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    color: rgba(248,246,239,0.42);
+    padding: 14px 12px 8px;
+  }
+
+  .nav-item{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 9px;
+    background: none;
+    border: none;
+    color: rgba(248,246,239,0.78);
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .nav-item svg{ flex-shrink: 0; opacity: 0.85; }
+  .nav-item:hover{
+    background: rgba(255,255,255,0.06);
+    color: #ffffff;
+  }
+  .nav-item.active{
+    background: var(--leaf-600);
+    color: #ffffff;
+  }
+  .nav-item.active svg{ opacity: 1; }
+  .nav-item .count{
+    margin-left: auto;
+    font-size: 11.5px;
+    font-weight: 700;
+    background: rgba(255,255,255,0.16);
+    padding: 1px 7px;
+    border-radius: 20px;
+  }
+  .nav-item.active .count{ background: rgba(255,255,255,0.28); }
+
+  .nav-item.danger{ color: rgba(240,180,166,0.85); }
+  .nav-item.danger:hover{ background: rgba(192,90,61,0.16); color: #f3c3b4; }
+
+  .sidebar-spacer{ flex: 1; }
+
+  .admin-card{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    border-top: 1px solid var(--line-dark);
+    margin-top: 10px;
+  }
+  .avatar{
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--leaf-500);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .admin-card .who{ line-height: 1.3; overflow: hidden; }
+  .admin-card .who strong{ font-size: 13px; display: block; color: #fff; }
+  .admin-card .who span{ font-size: 11.5px; color: rgba(248,246,239,0.5); }
+
+  /* ---------------- Main column ---------------- */
+
+  .main{
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .topbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 30px;
+    background: var(--cream-50);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+  .topbar h1{
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+  }
+  .topbar .subtitle{
+    font-size: 13px;
+    color: var(--ink-600);
+    margin-top: 2px;
+  }
+  .topbar-right{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .icon-btn{
+    position: relative;
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ink-600);
+    cursor: pointer;
+  }
+  .icon-btn:hover{ background: var(--cream-100); }
+  .today-chip{
+    font-size: 12.5px;
+    color: var(--ink-600);
+    background: var(--cream-100);
+    border-radius: 20px;
+    padding: 6px 12px;
+  }
+
+  .content{
+    padding: 28px 30px 60px;
+    flex: 1;
+  }
+
+  .view{ display: none; }
+  .view.active{ display: block; animation: fadeIn 0.35s ease; }
+  @keyframes fadeIn{ from{ opacity: 0; transform: translateY(6px); } to{ opacity: 1; transform: translateY(0); } }
+
+  /* ---------------- Stat tiles (brand-style green cards) ---------------- */
+
+  .stat-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+  .stat-tile{
+    background: var(--leaf-500);
+    border-radius: 14px;
+    padding: 20px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-tile.alt{ background: var(--forest-800); }
+  .stat-tile.clay{ background: var(--clay-400); }
+  .stat-tile.rust{ background: var(--rust-500); }
+  .stat-tile .icon-circle{
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.22);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 26px;
+  }
+  .stat-tile .value{ font-size: 28px; font-weight: 700; font-family: 'Quicksand', sans-serif; }
+  .stat-tile .label{ font-size: 13px; opacity: 0.9; margin-top: 4px; }
+
+  /* ---------------- Panels ---------------- */
+
+  .panel{
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 22px;
+  }
+  .panel-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .panel-head h3{ font-size: 16px; font-weight: 600; margin: 0; }
+  .panel-head .link-quiet{
+    font-size: 13px;
+    color: var(--leaf-600);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .two-col{
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+
+  /* Activity log */
+  .log-item{
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .log-item:last-child{ border-bottom: none; }
+  .log-dot{
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+  }
+  .log-dot.approve{ background: var(--leaf-500); }
+  .log-dot.decline{ background: var(--rust-500); }
+  .log-dot.edit{ background: var(--clay-400); }
+  .log-text{ font-size: 13.5px; line-height: 1.5; }
+  .log-text strong{ font-weight: 600; }
+  .log-time{ font-size: 12px; color: var(--ink-400); margin-top: 2px; }
+
+  /* Queue list */
+  .queue-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13.5px;
+  }
+  .queue-item:last-child{ border-bottom: none; }
+  .queue-item .name{ font-weight: 600; }
+  .queue-item .meta{ font-size: 12px; color: var(--ink-400); margin-top: 2px; }
+
+  .empty-state{
+    padding: 34px 10px;
+    text-align: center;
+  }
+  .empty-state p{
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--ink-400);
+    line-height: 1.6;
+  }
+
+  /* Pills */
+  .pill{
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .pill.pending{ background: var(--clay-100); color: #93712c; }
+  .pill.approved{ background: var(--leaf-100); color: var(--leaf-600); }
+  .pill.declined{ background: var(--rust-100); color: var(--rust-500); }
+  .pill.active-status{ background: var(--leaf-100); color: var(--leaf-600); }
+  .pill.suspended{ background: var(--rust-100); color: var(--rust-500); }
+
+  /* ---------------- Tables ---------------- */
+
+  .table-wrap{ overflow-x: auto; }
+  table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  thead th{
+    text-align: left;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--ink-600);
+    text-transform: uppercase;
+    padding: 0 14px 10px;
+    border-bottom: 1.5px solid var(--line);
+    white-space: nowrap;
+  }
+  tbody td{
+    padding: 13px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  tbody tr:last-child td{ border-bottom: none; }
+  tbody tr:hover{ background: var(--cream-100); }
+  .cell-title{ font-weight: 600; }
+  .cell-sub{ font-size: 12px; color: var(--ink-400); }
+
+  .row-actions{ display: flex; gap: 8px; }
+  .btn-mini{
+    border: none;
+    border-radius: 7px;
+    padding: 6px 11px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-mini.approve{ background: var(--leaf-100); color: var(--leaf-600); }
+  .btn-mini.approve:hover{ background: var(--leaf-500); color: #fff; }
+  .btn-mini.decline{ background: var(--rust-100); color: var(--rust-500); }
+  .btn-mini.decline:hover{ background: var(--rust-500); color: #fff; }
+  .btn-mini.view{ background: var(--cream-100); color: var(--ink-600); }
+  .btn-mini.view:hover{ background: var(--forest-800); color: #fff; }
+
+  .search-row{
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .search-input{
+    flex: 1;
+    max-width: 320px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 9px;
+    font-size: 13.5px;
+    outline: none;
+    background: var(--cream-50);
+  }
+  .search-input:focus{ border-color: var(--leaf-500); }
+  .filter-chip{
+    padding: 9px 14px;
+    border-radius: 9px;
+    border: 1.5px solid var(--line);
+    background: var(--cream-50);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-600);
+    cursor: pointer;
+  }
+  .filter-chip.active{ background: var(--forest-800); color: #fff; border-color: var(--forest-800); }
+
+  /* Remedies status row accent (added for filtering feature) */
+  tbody tr[data-status="pending"]{ box-shadow: inset 3px 0 0 var(--clay-400); }
+  tbody tr[data-status="approved"]{ box-shadow: inset 3px 0 0 var(--leaf-500); }
+  tbody tr[data-status="declined"]{ box-shadow: inset 3px 0 0 var(--rust-500); }
+
+  /* ---------------- Forms (contact / notification) ---------------- */
+
+  .form-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .field{ margin-bottom: 18px; }
+  .field.full{ grid-column: 1 / -1; }
+  .field label{
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+  .field input, .field select, .field textarea{
+    width: 100%;
+    padding: 11px 13px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink-900);
+    background: var(--cream-50);
+    border: 1.5px solid var(--line);
+    border-radius: 9px;
+    outline: none;
+  }
+  .field textarea{ resize: vertical; min-height: 110px; }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    border-color: var(--leaf-500);
+    box-shadow: 0 0 0 4px var(--leaf-100);
+  }
+  .field .hint{ font-size: 12px; color: var(--ink-400); margin-top: 6px; }
+
+  .btn-primary{
+    padding: 12px 22px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--leaf-600);
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+  }
+  .btn-primary:hover{ background: var(--leaf-500); }
+
+  .confirm-note{
+    display: none;
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: var(--leaf-100);
+    color: #2f5522;
+    font-size: 13px;
+  }
+  .confirm-note.show{ display: block; }
+
+  /* ---------------- Logout view ---------------- */
+
+  .logout-card{
+    max-width: 420px;
+    margin: 40px auto;
+    text-align: center;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 40px 32px;
+  }
+  .logout-card .icon-circle{
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--rust-100);
+    color: var(--rust-500);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px;
+  }
+  .logout-card h3{ font-size: 19px; margin: 0 0 8px; }
+  .logout-card p{ font-size: 13.5px; color: var(--ink-600); margin: 0 0 24px; line-height: 1.55; }
+  .logout-actions{ display: flex; gap: 10px; justify-content: center; }
+  .btn-ghost{
+    padding: 11px 18px;
+    border-radius: 9px;
+    border: 1.5px solid var(--line);
+    background: #fff;
+    font-weight: 600;
+    font-size: 13.5px;
+    cursor: pointer;
+    color: var(--ink-600);
+  }
+  .btn-danger{
+    padding: 11px 18px;
+    border-radius: 9px;
+    border: none;
+    background: var(--rust-500);
+    color: #fff;
+    font-weight: 600;
+    font-size: 13.5px;
+    cursor: pointer;
+  }
+  .loggedout-state{ display: none; }
+  .loggedout-state.show{ display: block; }
+  .logout-card.hide-default{ display: none; }
+
+  /* ---------------- Mobile ---------------- */
+
+  .menu-toggle{ display: none; }
+
+  @media (max-width: 980px){
+    .app{ grid-template-columns: 1fr; }
+    .sidebar{
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: 240px;
+      transform: translateX(-100%);
+      transition: transform 0.2s ease;
+      z-index: 20;
+    }
+    .sidebar.open{ transform: translateX(0); }
+    .menu-toggle{
+      display: flex;
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      border: 1px solid var(--line);
+      background: #fff;
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      margin-right: 12px;
+    }
+    .topbar{ padding: 16px 18px; }
+    .content{ padding: 20px 18px 50px; }
+    .stat-grid{ grid-template-columns: 1fr 1fr; }
+    .two-col{ grid-template-columns: 1fr; }
+    .form-grid{ grid-template-columns: 1fr; }
+    .overlay{
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(18,32,25,0.4);
+      z-index: 15;
+    }
+    .overlay.show{ display: block; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .view.active{ animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ---------------- Sidebar ---------------- -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">Health couch<span class="dot">.</span><span class="badge">ADMIN</span></div>
+
+    <div class="nav-label">Overview</div>
+    <button class="nav-item active" data-view="admin-activities">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2 4 4 8-8 4 4"/><path d="M3 20h18"/></svg>
+      Admin activities
+    </button>
+    <button class="nav-item" data-view="user-activities">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 19c1-3.5 3.6-5.4 6.5-5.4s5.5 1.9 6.5 5.4"/><circle cx="18" cy="8.5" r="2.4"/><path d="M16.5 13.7c2.3.4 4 2 4.7 4.3"/></svg>
+      User activities
+    </button>
+    <button class="nav-item" data-view="remedies">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v4M16 3v4"/><rect x="4" y="6" width="16" height="15" rx="2"/><path d="M8 13h4M8 17h8"/></svg>
+      Remedies
+    </button>
+
+    <div class="nav-label">Account</div>
+    <button class="nav-item" data-view="contact-details">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+      Contact details
+    </button>
+    <button class="nav-item" data-view="send-notification">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+      Send notification
+    </button>
+
+    <div class="sidebar-spacer"></div>
+    <form action = "{% url "logout_admin" %}" method = POST>
+      {% csrf_token %}
+      <button class="nav-item danger" data-view="logout">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        Logout
+      </button>
+    </form>
+
+    <div class="admin-card">
+      <div class="avatar">—</div>
+      <div class="who">
+        <strong>Admin name</strong>
+        <span>Role · Health couch.</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ---------------- Main ---------------- -->
+  <div class="main">
+
+    <div class="topbar">
+      <div style="display:flex; align-items:center;">
+        <div class="menu-toggle" id="menu-toggle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </div>
+        <div>
+          <h1 id="page-title">Admin activities</h1>
+          <div class="subtitle" id="page-subtitle">A running log of what's happened across Health couch.</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="today-chip" id="today-chip"></div>
+        <div class="icon-btn">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+        </div>
+        <div class="avatar">—</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ===================== ADMIN ACTIVITIES ===================== -->
+      <section class="view active" id="view-admin-activities">
+
+        <div class="stat-grid">
+          <div class="stat-tile">
+            <div class="icon-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 19c1-3.5 3.6-5.4 6.5-5.4s5.5 1.9 6.5 5.4"/></svg></div>
+            <div class="value">—</div>
+            <div class="label">Registered users</div>
+          </div>
+          <div class="stat-tile alt">
+            <div class="icon-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="4" y="6" width="16" height="15" rx="2"/><path d="M8 13h4M8 17h8"/></svg></div>
+            <div class="value">—</div>
+            <div class="label">Active listings</div>
+          </div>
+          <div class="stat-tile clay">
+            <div class="icon-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+            <div class="value">—</div>
+            <div class="label">Pending queue</div>
+          </div>
+          <div class="stat-tile rust">
+            <div class="icon-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg></div>
+            <div class="value">—</div>
+            <div class="label">Declined this month</div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Recent moderation activity</h3>
+              <span class="link-quiet">View all</span>
+            </div>
+
+            <div class="empty-state">
+              <p>No activity yet. Approvals, declines, and edits you make will show up here.</p>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Queue waiting on you</h3>
+              <span class="link-quiet">Open remedies</span>
+            </div>
+            <div class="empty-state">
+              <p>Nothing waiting for review right now.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== USER ACTIVITIES ===================== -->
+      <section class="view" id="view-user-activities">
+        <div class="search-row">
+          <form action = "{% url 'search_users' %}" method = "GET">
+          <input class="search-input" name = "name" type="text" placeholder="Search users by name or email">
+          <button type="submit" class="filter-chip active">Search</button>
+          </form>
+          <button class="filter-chip active">All</button>
+          {% comment %} <button class="filter-chip">Suspended</button> {% endcomment %}
+        </div>
+
+        <div class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Contact</th>
+                  {% comment %} <th>Last active</th> {% endcomment %}
+                  {% comment %} <th>Status</th> {% endcomment %}
+                </tr>
+              </thead>
+              <tbody>
+                {% if users  %}
+                <tr>
+                  {% for u in users %}
+                  <td> {{ u.Name }} </td>
+                  <td> {{ u.Email }} </td>
+                  <td> {{ u.Contact }} </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                  <td colspan="5">
+                    <div class="empty-state">
+                      <p>No users to show yet. Registered contributors will appear here.</p>
+                    </div>
+                  </td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== REMEDIES ===================== -->
+      <section class="view" id="view-remedies">
+        <div class="search-row">
+          <input class="search-input" id="remedy-search" type="text" placeholder="Search remedies by title or ailment">
+          <button class="filter-chip active" data-filter="all">All</button>
+          <button class="filter-chip" data-filter="pending">Pending</button>
+          <button class="filter-chip" data-filter="approved">Approved</button>
+          <button class="filter-chip" data-filter="declined">Declined</button>
+          <form action = "{% url 'admin_remedies' %}" method = "POST" style="display:inline;">
+            {% csrf_token %}
+            <button type = "submit" class="filter-chip">Upload</button>
+          </form>
+        </div>
+
+        <div class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Issue</th>
+                  <th>Solution</th>
+                  <th>Image</th>
+                  <th>Video</th>
+                  <th>Benefits</th>
+                  <th>Date</th>
+                  <th> Action </th>
+                </tr>
+              </thead>
+              <tbody id="remedies-tbody">
+                {% for r in remedy %}
+                <tr data-status="{{ r.status|lower }}" data-name="{{ r.Name }}" data-issue="{{ r.Issues }}">
+                  <td class="cell-title">{{ r.Name }}</td>
+                  <td>{{ r.Issues }}</td>
+                  <td>{{ r.Solution }}</td>
+                  <td>{{ r.img }}</td>
+                  <td>{{ r.video }}</td>
+                  <td>{{ r.Benefits }}</td>
+                  <td>{{ r.uploaded_at }}</td>
+                  <td> <a href="{% url 'approve_remedy' r.id %}">Approve </a> <br><a href = "{% url 'disapprove_remedy' r.id %}"> Disapprove</a> </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% if not remedy %}
+            <div class="empty-state">
+              <p>No remedies to show yet. Community submissions will appear here for review.</p>
+            </div>
+            {% endif %}
+            <div class="empty-state" id="remedies-filtered-empty" style="display:none;">
+              <p>No remedies match this filter or search.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== CONTACT DETAILS ===================== -->
+      <section class="view" id="view-contact-details">
+        <div class="panel" style="max-width: 640px;">
+          <div class="panel-head"><h3>Your contact details</h3></div>
+          <form id="contact-form">
+            <div class="form-grid">
+              <div class="field">
+                <label for="c-name">Full name</label>
+                <input type="text" id="c-name" placeholder="Enter your full name">
+              </div>
+              <div class="field">
+                <label for="c-role">Role</label>
+                <input type="text" id="c-role" placeholder="e.g. Moderator">
+              </div>
+              <div class="field">
+                <label for="c-email">Email address</label>
+                <input type="email" id="c-email" placeholder="you@healthcouch.com">
+              </div>
+              <div class="field">
+                <label for="c-phone">Phone number</label>
+                <input type="tel" id="c-phone" placeholder="+91 00000 00000">
+              </div>
+              <div class="field full">
+                <label for="c-bio">Note for the team</label>
+                <textarea id="c-bio" placeholder="Add a short note about your availability or responsibilities"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn-primary">Save changes</button>
+            <div class="confirm-note" id="contact-confirm">Saved locally for this session — connect this form to your Django profile view to persist it.</div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ===================== SEND NOTIFICATION ===================== -->
+      <section class="view" id="view-send-notification">
+        <div class="panel" style="max-width: 640px;">
+          <div class="panel-head"><h3>Send a notification</h3></div>
+          <form id="notify-form">
+            <div class="field">
+              <label for="n-audience">Send to</label>
+              <select id="n-audience">
+                <option>All registered users</option>
+                <option>Contributors with pending submissions</option>
+                <option>Users with approved remedies</option>
+                <option>A single user by email</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="n-subject">Subject</label>
+              <input type="text" id="n-subject" placeholder="e.g. Your remedy has been approved">
+            </div>
+            <div class="field">
+              <label for="n-message">Message</label>
+              <textarea id="n-message" placeholder="Write the notification message…"></textarea>
+              <div class="hint">Keep it short and specific — people should know exactly what happened and what, if anything, to do next.</div>
+            </div>
+            <button type="submit" class="btn-primary">Send notification</button>
+            <div class="confirm-note" id="notify-confirm">This is a front-end demo — wire this up to your notification/email backend to actually deliver it.</div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ===================== LOGOUT ===================== -->
+      <section class="view" id="view-logout">
+        <div class="logout-card" id="logout-confirm-card">
+          <div class="icon-circle">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+          </div>
+          <h3>Log out of the admin panel?</h3>
+          <p>You'll need to sign in again to review submissions, manage users, or send notifications.</p>
+          <div class="logout-actions">
+            <button class="btn-ghost" id="logout-cancel">Stay signed in</button>
+            <button class="btn-danger" id="logout-confirm-btn">Log out</button>
+          </div>
+        </div>
+
+        <div class="logout-card loggedout-state" id="loggedout-state">
+          <div class="icon-circle" style="background: var(--leaf-100); color: var(--leaf-600);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <h3>You've been logged out</h3>
+          <p>This is a static demo, so nothing was sent to a server. Connect this button to your Django logout view to end the real session.</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- Today's date (real, not hardcoded) ----------
+  document.getElementById('today-chip').textContent = new Date().toLocaleDateString(undefined, {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+  });
+
+  // ---------- Sidebar navigation ----------
+  const navItems = document.querySelectorAll('.nav-item');
+  const views = document.querySelectorAll('.view');
+  const pageTitle = document.getElementById('page-title');
+  const pageSubtitle = document.getElementById('page-subtitle');
+
+  const titles = {
+    'admin-activities': ['Admin activities', "A running log of what's happened across Health couch."],
+    'user-activities': ['User activities', 'See who is contributing and how active they are.'],
+    'remedies': ['Remedies', 'Review, approve, or decline community-submitted remedies.'],
+    'contact-details': ['Contact details', 'Keep your admin profile up to date.'],
+    'send-notification': ['Send notification', 'Message contributors or the whole community.'],
+    'logout': ['Logout', 'End your current admin session.']
+  };
+
+  function setActiveView(key){
+    navItems.forEach(btn => btn.classList.toggle('active', btn.dataset.view === key));
+    views.forEach(v => v.classList.toggle('active', v.id === 'view-' + key));
+    if (titles[key]){
+      pageTitle.textContent = titles[key][0];
+      pageSubtitle.textContent = titles[key][1];
+    }
+    closeMobileSidebar();
+  }
+
+  navItems.forEach(btn => {
+    btn.addEventListener('click', () => setActiveView(btn.dataset.view));
+  });
+
+  // ---------- Mobile sidebar toggle ----------
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const menuToggle = document.getElementById('menu-toggle');
+
+  function openMobileSidebar(){
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+  }
+  function closeMobileSidebar(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  }
+  menuToggle.addEventListener('click', openMobileSidebar);
+  overlay.addEventListener('click', closeMobileSidebar);
+
+  // ---------- Remedies: status filter + search ----------
+  const remedyFilterChips = document.querySelectorAll('#view-remedies .filter-chip[data-filter]');
+  const remedySearchInput = document.getElementById('remedy-search');
+  const remediesTbody = document.getElementById('remedies-tbody');
+  const remediesFilteredEmpty = document.getElementById('remedies-filtered-empty');
+  let activeRemedyFilter = 'all';
+
+  function applyRemedyFilters(){
+    const rows = remediesTbody.querySelectorAll('tr[data-status]');
+    const query = remedySearchInput.value.trim().toLowerCase();
+    let visibleCount = 0;
+
+    rows.forEach(row => {
+      const status = row.dataset.status;
+      const name = (row.dataset.name || '').toLowerCase();
+      const issue = (row.dataset.issue || '').toLowerCase();
+
+      const matchesFilter = activeRemedyFilter === 'all' || status === activeRemedyFilter;
+      const matchesSearch = query === '' || name.includes(query) || issue.includes(query);
+
+      const visible = matchesFilter && matchesSearch;
+      row.style.display = visible ? '' : 'none';
+      if (visible) visibleCount++;
+    });
+
+    remediesFilteredEmpty.style.display = (rows.length > 0 && visibleCount === 0) ? 'block' : 'none';
+  }
+
+  remedyFilterChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      remedyFilterChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeRemedyFilter = chip.dataset.filter;
+      applyRemedyFilters();
+    });
+  });
+
+  if (remedySearchInput){
+    remedySearchInput.addEventListener('input', applyRemedyFilters);
+  }
+
+  // Run once on load so the empty state reflects whatever Django rendered
+  applyRemedyFilters();
+
+  // ---------- Contact form ----------
+  document.getElementById('contact-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    document.getElementById('contact-confirm').classList.add('show');
+  });
+
+  // ---------- Notification form ----------
+  document.getElementById('notify-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    document.getElementById('notify-confirm').classList.add('show');
+  });
+
+  // ---------- Logout flow ----------
+  document.getElementById('logout-cancel').addEventListener('click', () => {
+    setActiveView('admin-activities');
+  });
+  document.getElementById('logout-confirm-btn').addEventListener('click', () => {
+    document.getElementById('logout-confirm-card').classList.add('hide-default');
+    document.getElementById('loggedout-state').classList.add('show');
+  });
+</script>
+
+</body>
+</html>
