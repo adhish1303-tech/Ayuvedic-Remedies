@@ -50,6 +50,9 @@ urlpatterns = [
     path('disapprove_remedy/<int:id>/',views.disapprove_remedy,name="disapprove_remedy"),
     path('approved_remedies/', views.approved_remedies, name = "approved_remedies"),
     path('decline_remedies/', views.decline_remedies, name = "decline_remedies"),
+    path('pending_remedies/', views.pending_remedies, name = "pending_remedies"),
+    path('approve_remedy/', views.approved_remedy, name = "approved_remedy"),
+    path('allremedies/', views.allremedies, name = "allremedies"),
 ]
 
 if settings.DEBUG:

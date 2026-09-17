@@ -147,7 +147,7 @@ def admin_remedies(request):
 def admin_upload(request, id):
     admins = admin.objects.get(id = id)
     # user_name = request.POST.get("")
-    user_email = request.POST.get(admins.email)
+    user_email = request.POST.get(admins.email) 
     name = request.POST.get('remedy_name')
     issues = request.POST.get('issues')
     solution = request.POST.get('solutions')
@@ -207,8 +207,20 @@ def disapprove_remedy(request,id):
 
 def approved_remedies(request):
     remedy = remedies.objects.filter(status = "Approved")
-    return render(request, "approved_remedies.html", {'remedy' : remedy})
+    return render(request, "approved_remedy.html", {'remedy' : remedy})
 
 def decline_remedies(request):
     remedy = remedies.objects.filter(status = "Declined")
-    return render(request, "declined_remedies.html", {'remedy' : remedy})
+    return render(request, "declined_remedy.html", {'remedy' : remedy})
+
+def pending_remedies(request):
+    remedy = remedies.objects.filter(status = "PENDING")
+    return render(request, "pending_remedies.html", {'remedy' : remedy})
+
+def approved_remedy(request):
+    remedy = remedies.objects.filter(status = "Approved")
+    return render(request, "approved_remedy.html",{'remedy' : remedy})
+
+def allremedies(request):
+    remedy = remedies.objects.all()
+    return render(request, "all_remedy.html", {'remedy' : remedy})

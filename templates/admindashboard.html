@@ -742,10 +742,22 @@
       <section class="view" id="view-remedies">
         <div class="search-row">
           <input class="search-input" id="remedy-search" type="text" placeholder="Search remedies by title or ailment">
-          <button class="filter-chip active" data-filter="all">All</button>
-          <button class="filter-chip" data-filter="pending">Pending</button>
-          <a href = "{% url 'approved_remedies' %}"><button class="filter-chip" data-filter="approved">Approved</button></a>
-          <a href = " {% url 'decline_remedies' %}"><button class="filter-chip" data-filter="declined">Declined</button></a>
+          <form action = "{% url 'allremedies' %}" method = "POST">
+            {% csrf_token %}
+            <button class="filter-chip" data-filter="pending" type = "submit">All</button>
+          </form>
+          <form action = "{% url 'pending_remedies' %}" method = "POST">
+            {% csrf_token %}
+            <button class="filter-chip" data-filter="pending" type = "submit">Pending</button>
+          </form>
+          <form action = "{% url 'approved_remedy' %}" method = "POST">
+            {% csrf_token %}
+            <button class="filter-chip" data-filter="pending" type = "submit">Approved</button>
+          </form>
+          <form action = "{% url 'decline_remedies' %}" method = "POST">
+            {% csrf_token %}
+            <button class="filter-chip" data-filter="pending" type = "submit">Declined</button>
+          </form>
           <form action = "{% url 'admin_remedies' %}" method = "POST" style="display:inline;">
             {% csrf_token %}
             <button type = "submit" class="filter-chip">Upload</button>
