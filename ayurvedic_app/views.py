@@ -227,7 +227,7 @@ def allremedies(request):
     remedy = remedies.objects.all()
     return render(request, "all_remedy.html", {'remedy' : remedy})
 
-def email(request):
+def sender_email(request):
     if request.method == 'POST':
         full_name = request.POST.get('name')
         sender_email = request.POST.get('email')
@@ -238,7 +238,7 @@ def email(request):
         to_email = ["adhish.1303@gmail.com"]
         text_content = f"From {full_name}, \n\n {message} \n\n Thank You"
         html_content = f"""
-                    <p> Dear <strong> { full_name } </strong> </p>
+                    <p> From <strong> { full_name } </strong> </p>
                     <p> { message } </p>
                     <br>
                     <p>Thank You, <br> <strong> {full_name} </strong> </p>
@@ -249,6 +249,6 @@ def email(request):
         try:
             email.send()
             messages.success(request,"Email sent successfully to the user !!")
-            return redirect('email')
+            return redirect('contactpage')
         except Exception as e:
             return HttpResponse(f"Failed to send email : {e}")
