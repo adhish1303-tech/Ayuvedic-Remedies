@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "workspacePath": "c:\\Python313\\Scripts\\ayurveda",
+  "entries": [
+    {
+      "command": "git status",
+      "timestamp": 1789736873665,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "C:\\Python313\\python.exe manage.py runserver",
+      "timestamp": 1789736923566,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_tukhrc.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_tukhrc.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1789736927653,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "C:\\Python313\\python.exe manage.py runserver",
+      "timestamp": 1789737599943,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git status",
+      "timestamp": 1789739406705,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    }
+  ],
+  "lastUpdated": 1789739406705
+}

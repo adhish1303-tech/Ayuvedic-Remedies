@@ -3,6 +3,8 @@ from django.shortcuts import redirect
 from ayurvedic_app.models import Register, admin, remedies
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.core.mail import EmailMultiAlternatives
+from django.http import HttpResponse
 # Create your views here.
 
 
@@ -146,7 +148,7 @@ def admin_remedies(request):
 
 def admin_upload(request, id):
     admins = admin.objects.get(id = id)
-    # user_name = request.POST.get("")
+    user_name = request.POST.get("")
     user_email = request.POST.get(admins.email) 
     name = request.POST.get('remedy_name')
     issues = request.POST.get('issues')
@@ -224,3 +226,29 @@ def approved_remedy(request):
 def allremedies(request):
     remedy = remedies.objects.all()
     return render(request, "all_remedy.html", {'remedy' : remedy})
+
+def email(request):
+    if request.method == 'POST':
+        full_name = request.POST.get('name')
+        sender_email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        from_email = f"{full_name}  <{sender_email}>"
+        to_email = ["adhish.1303@gmail.com"]
+        text_content = f"From {full_name}, \n\n {message} \n\n Thank You"
+        html_content = f"""
+                    <p> Dear <strong> { full_name } </strong> </p>
+                    <p> { message } </p>
+                    <br>
+                    <p>Thank You, <br> <strong> {full_name} </strong> </p>
+        """
+        email = EmailMultiAlternatives(subject, text_content, from_email, to_email)
+        email.attach_alternative(html_content, "text/html")
+
+        try:
+            email.send()
+            messages.success(request,"Email sent successfully to the user !!")
+            return redirect('email')
+        except Exception as e:
+            return HttpResponse(f"Failed to send email : {e}")
