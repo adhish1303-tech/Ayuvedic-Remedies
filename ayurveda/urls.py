@@ -54,6 +54,7 @@ urlpatterns = [
     path('approve_remedy/', views.approved_remedy, name = "approved_remedy"),
     path('allremedies/', views.allremedies, name = "allremedies"),
     path('email/', views.sender_email, name = "sender_email"),
+    path('search_remedy/', views.search_remedies, name = "search_remedies"),
 ]
 
 if settings.DEBUG:

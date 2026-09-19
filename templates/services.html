@@ -1,408 +1,946 @@
 {% load static %}
-<!doctype html>
-<html class="no-js" lang="zxx">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Health | Template</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cures | Health couch</title>
+  <meta name="description" content="Search traditional Ayurvedic home remedies by ailment or ingredient. Every remedy is reviewed by the Health couch team.">
 
-    <!-- CSS here -->
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/static/css/slicknav.css">
-    <link rel="stylesheet" href="/static/css/flaticon.css">
-    <link rel="stylesheet" href="/static/css/gijgo.css">
-    <link rel="stylesheet" href="/static/css/animate.min.css">
-    <link rel="stylesheet" href="/static/css/animated-headline.css">
-    <link rel="stylesheet" href="/static/css/magnific-popup.css">
-    <link rel="stylesheet" href="/static/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="/static/css/themify-icons.css">
-    <link rel="stylesheet" href="/static/css/slick.css">
-    <link rel="stylesheet" href="/static/css/nice-select.css">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Tokens (taken from the Healthcouch live preview) ---------- */
+    :root {
+      --green: #5aab4f;
+      --green-deep: #1f4a25;
+      --green-ink: #163b1e;
+      --mint: #e8f6e5;
+      --mint-deep: #d3ecce;
+      --dot: #c3e3be;
+      --navy: #1b2a4e;
+      --text: #3d5a42;
+      --line: #cfe6cb;
+      --white: #fff;
+      --radius-btn: 10px;
+      --radius-leaf: 56px;
+      --font: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+    body.modal-open { overflow: hidden; }
+    h1, h2, h3, p, ul, ol { margin: 0; }
+    ul, ol { padding: 0; list-style: none; }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+    button { font-family: inherit; }
+
+    :focus-visible { outline: 3px solid var(--green-deep); outline-offset: 3px; }
+    .on-green :focus-visible { outline-color: #fff; }
+
+    .container { width: min(1320px, 100% - 3rem); margin-inline: auto; }
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 15px 22px;
+      border: 2px solid transparent;
+      border-radius: var(--radius-btn);
+      font-size: 1rem; font-weight: 500; letter-spacing: .06em; line-height: 1.2;
+      text-decoration: none; cursor: pointer;
+      transition: background-color .2s, color .2s, border-color .2s;
+    }
+    .btn-green { background: var(--green); color: #fff; }
+    .btn-green:hover { background: var(--green-deep); }
+    .btn-deep { background: var(--green-deep); color: #fff; }
+    .btn-deep:hover { background: var(--green); }
+    .btn-outline-light { border-color: #fff; color: #fff; border-radius: 0; padding: 22px 46px; }
+    .btn-outline-light:hover { background: #fff; color: var(--green-deep); }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--white);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, .07);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding: 22px 56px;
+    }
+    .logo {
+      font-size: 2.25rem; font-weight: 400; line-height: 1.1;
+      color: var(--green-deep); text-decoration: none; letter-spacing: -.01em;
+      white-space: nowrap;
+    }
+    .menu { display: flex; align-items: center; gap: 24px; }
+    .menu nav ul { display: flex; align-items: center; }
+    .menu nav a {
+      display: block; padding: 8px 35px;
+      color: var(--navy); font-size: 1rem; text-decoration: none;
+      transition: color .2s;
+    }
+    .menu nav a:hover, .menu nav a[aria-current="page"] { color: var(--green); }
+    .auth { display: flex; gap: 22px; }
+    .nav-toggle {
+      display: none; width: 48px; height: 48px; padding: 0;
+      align-items: center; justify-content: center;
+      background: var(--green); color: #fff; border: 0; border-radius: var(--radius-btn); cursor: pointer;
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative; overflow: hidden;
+      background: var(--mint);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 90%);
+      padding: 110px 0 200px;
+    }
+    .hero-copy { position: relative; z-index: 2; max-width: 680px; }
+    .hero h1 {
+      font-size: clamp(3.25rem, 9vw, 5.5rem);
+      font-weight: 300; line-height: 1.1; color: var(--green-ink);
+    }
+    .hero-lead {
+      margin-top: 22px; max-width: 30ch;
+      font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: 300; line-height: 1.5;
+      color: var(--green-ink);
+    }
+    .search {
+      display: flex; margin-top: 40px; max-width: 640px;
+      background: #fff; border: 2px solid var(--green); border-radius: var(--radius-btn);
+      overflow: hidden; box-shadow: 0 14px 34px rgba(31, 74, 37, .12);
+    }
+    .search:focus-within { box-shadow: 0 0 0 4px rgba(90, 171, 79, .35), 0 14px 34px rgba(31, 74, 37, .12); }
+    .search input {
+      flex: 1; min-width: 0; padding: 18px 22px;
+      border: 0; outline: none; background: transparent;
+      font: 400 1rem/1.4 var(--font); color: var(--green-ink);
+    }
+    .search input::placeholder { color: #7d977f; }
+    .search button {
+      display: flex; align-items: center; gap: 10px; padding: 0 28px;
+      border: 0; background: var(--green-deep); color: #fff;
+      font-size: .95rem; font-weight: 500; letter-spacing: .06em; cursor: pointer;
+      transition: background-color .2s;
+    }
+    .search button:hover { background: var(--green); }
+    .try {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+      margin-top: 22px; font-size: .9rem; color: var(--green-ink);
+    }
+    .try button {
+      padding: 4px 16px; background: transparent; cursor: pointer;
+      border: 1.5px solid var(--green); border-radius: var(--radius-btn);
+      font-size: .875rem; color: var(--green-deep);
+      transition: background-color .2s, color .2s;
+    }
+    .try button:hover { background: var(--green); color: #fff; }
+
+    .hero-ring {
+      position: absolute; z-index: 1; right: -9%; top: 46%;
+      width: min(46vw, 660px); aspect-ratio: 1; transform: translateY(-50%);
+      border-radius: 50%; border: 30px solid var(--green);
+      background: var(--mint-deep);
+      display: grid; place-items: center;
+    }
+    .hero-ring svg { width: 62%; margin-right: 14%; }
+    .dots {
+      background-image: radial-gradient(circle, currentColor 5px, transparent 6px);
+      background-size: 32px 32px; color: var(--dot);
+    }
+    .hero-dots { position: absolute; z-index: 1; right: 30%; top: 30%; width: 128px; height: 192px; }
+
+    /* ---------- Results ---------- */
+    .results { padding: 20px 0 90px; scroll-margin-top: 110px; }
+    .results-bar {
+      display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+      gap: 24px; margin-bottom: 44px;
+    }
+    .results-title {
+      font-size: clamp(1.75rem, 3.2vw, 2.5rem); font-weight: 300; line-height: 1.3;
+      color: var(--green-ink); max-width: 28ch;
+    }
+    .filters { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      padding: 9px 18px; background: #fff; cursor: pointer;
+      border: 1.5px solid var(--green); border-radius: var(--radius-btn);
+      font-size: .875rem; font-weight: 500; letter-spacing: .03em; color: var(--green-deep);
+      transition: background-color .2s, color .2s;
+    }
+    .chip:hover { background: var(--mint); }
+    .chip[aria-pressed="true"] { background: var(--green); color: #fff; }
+
+    .grid {
+      display: grid; gap: 34px;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr));
+    }
+
+    .remedy-card {
+      position: relative; display: flex; flex-direction: column;
+      background: #fff; overflow: hidden;
+      border-radius: 0 0 0 var(--radius-leaf);
+      box-shadow: 0 12px 34px rgba(31, 74, 37, .12);
+      transition: box-shadow .25s;
+    }
+    .remedy-card:hover { box-shadow: 0 18px 44px rgba(31, 74, 37, .22); }
+    .remedy-card:has(.open:focus-visible) { outline: 3px solid var(--green-deep); outline-offset: 4px; }
+    .remedy-card__head {
+      padding: 34px 26px 28px; text-align: center; color: #fff;
+      background: var(--green);
+    }
+    .remedy-card__head.has-image {
+      background-image: linear-gradient(rgba(31, 74, 37, .62), rgba(31, 74, 37, .82)), var(--img);
+      background-size: cover; background-position: center;
+    }
+    .orb {
+      display: grid; place-items: center; width: 84px; height: 84px; margin: 0 auto 18px;
+      border-radius: 50%; background: rgba(255, 255, 255, .2);
+      box-shadow: 0 0 0 7px rgba(255, 255, 255, .12);
+    }
+    .orb svg { width: 38px; height: 38px; stroke: #fff; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .remedy-card__name { font-size: 1.375rem; font-weight: 600; line-height: 1.35; }
+    .remedy-card__body { display: flex; flex: 1; flex-direction: column; gap: 14px; padding: 24px 26px 26px; }
+    .issue {
+      align-self: flex-start; padding: 2px 14px;
+      background: var(--mint); color: var(--green-deep);
+      border-radius: 999px; font-size: .8125rem; font-weight: 500; line-height: 1.7;
+    }
+    .remedy-card__summary { font-size: .95rem; line-height: 1.85; }
+    .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pills li {
+      padding: 0 12px; border: 1px solid var(--line); border-radius: 999px;
+      font-size: .78rem; line-height: 1.9; color: var(--green-deep);
+    }
+    .remedy-card__foot {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      margin-top: auto; padding-top: 10px;
+    }
+    .badge { display: inline-flex; align-items: center; gap: 8px; font-size: .8125rem; font-weight: 500; color: var(--green-deep); }
+    .badge svg { width: 18px; height: 18px; stroke: var(--green); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .open {
+      display: grid; place-items: center; width: 50px; height: 50px; padding: 0;
+      background: transparent; color: var(--green); cursor: pointer;
+      border: 2px solid var(--green); border-radius: 50%;
+      transition: background-color .2s, color .2s;
+    }
+    .open:focus-visible { outline: none; }
+    .open svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .open::after { content: ""; position: absolute; inset: 0; }
+    .remedy-card:hover .open { background: var(--green); color: #fff; }
+
+    mark { border-radius: 4px; background: #fff0a8; color: inherit; padding: 0 2px; }
+    .remedy-card__head mark { background: rgba(255, 255, 255, .3); color: #fff; }
+
+    .empty { max-width: 560px; margin: 20px auto 0; text-align: center; }
+    .empty[hidden] { display: none; }
+    .empty .orb { background: var(--mint); box-shadow: 0 0 0 7px var(--mint-deep); width: 96px; height: 96px; margin-bottom: 30px; }
+    .empty .orb svg { stroke: var(--green); width: 42px; height: 42px; }
+    .empty h3 { font-size: 1.5rem; font-weight: 500; color: var(--green-ink); line-height: 1.4; }
+    .empty p { margin-top: 10px; }
+    .empty .try { justify-content: center; margin: 22px 0 28px; }
+
+    .disclaimer {
+      display: flex; gap: 16px; align-items: flex-start;
+      margin-top: 64px; padding: 22px 28px;
+      background: var(--mint); border-radius: 0 0 0 32px;
+      font-size: .9rem; line-height: 1.75; color: var(--green-ink);
+    }
+    .disclaimer svg { flex: none; width: 24px; height: 24px; margin-top: 4px; stroke: var(--green-deep); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ---------- Suggest a remedy ---------- */
+    .suggest { position: relative; padding: 30px 0 110px; background: linear-gradient(to bottom, #fff 0, #fff 40px, var(--mint) 40px); }
+    .suggest-card {
+      position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr;
+      background: var(--green); color: #fff; border-radius: 0 0 0 110px; overflow: hidden;
+    }
+    .suggest-copy { padding: clamp(40px, 6vw, 84px) clamp(28px, 6vw, 96px); }
+    .suggest-copy h2 { font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 300; line-height: 1.25; }
+    .suggest-copy p { margin: 22px 0 36px; max-width: 34ch; font-size: 1.25rem; font-weight: 300; line-height: 1.8; }
+    .suggest-art { min-height: 340px; background: #efece6; }
+    .suggest-art svg { width: 100%; height: 100%; object-fit: cover; }
+    .suggest-dots { position: absolute; left: 44%; bottom: 40px; width: 192px; height: 128px; }
+
+    /* ---------- Footer ---------- */
+    .site-footer { background: var(--green-deep); color: #d6ead2; padding: 56px 0 30px; }
+    .footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
+    .site-footer .logo { color: #fff; }
+    .footer-nav { display: flex; flex-wrap: wrap; gap: 8px 32px; }
+    .footer-nav a { text-decoration: none; }
+    .footer-nav a:hover { color: #fff; text-decoration: underline; }
+    .footer-note { margin-top: 36px; padding-top: 22px; border-top: 1px solid rgba(255, 255, 255, .18); font-size: .875rem; }
+
+    /* ---------- Back to top ---------- */
+    .to-top {
+      position: fixed; right: 30px; bottom: 30px; z-index: 40;
+      display: grid; place-items: center; width: 62px; height: 62px; padding: 0;
+      background: var(--green); color: #fff; border: 0; border-radius: 50%; cursor: pointer;
+      box-shadow: 0 8px 22px rgba(31, 74, 37, .3);
+      opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s, background-color .2s;
+    }
+    .to-top.show { opacity: 1; visibility: visible; }
+    .to-top:hover { background: var(--green-deep); }
+    .to-top svg { width: 26px; height: 26px; stroke: #fff; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ---------- Remedy dialog ---------- */
+    dialog {
+      width: min(880px, 100% - 32px); max-height: calc(100dvh - 40px); padding: 0;
+      border: 0; border-radius: 0 0 0 72px; overflow: hidden;
+      background: #fff; color: var(--text);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .35);
+    }
+    dialog[open] { display: flex; flex-direction: column; animation: pop .22s ease-out; }
+    dialog::backdrop { background: rgba(22, 59, 30, .6); }
+    @keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+    .modal-head { position: relative; padding: 38px 96px 34px 44px; background: var(--green); color: #fff; }
+    .modal-head .orb { margin: 0 0 18px; width: 68px; height: 68px; }
+    .modal-head .orb svg { width: 32px; height: 32px; }
+    .modal-head h2 { font-size: clamp(1.6rem, 3.4vw, 2.25rem); font-weight: 400; line-height: 1.3; }
+    .modal-head p { margin-top: 6px; font-weight: 300; font-size: 1.125rem; }
+    .modal-close {
+      position: absolute; top: 24px; right: 24px; display: grid; place-items: center;
+      width: 48px; height: 48px; padding: 0; cursor: pointer;
+      background: transparent; color: #fff; border: 2px solid #fff; border-radius: 50%;
+      transition: background-color .2s, color .2s;
+    }
+    .modal-close:hover { background: #fff; color: var(--green-deep); }
+    .modal-close svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+    .modal-body { flex: 1; overflow: auto; overscroll-behavior: contain; padding: 34px 44px 44px; }
+    .modal-body > * + * { margin-top: 34px; }
+    .modal-lead { font-size: 1.125rem; font-weight: 300; line-height: 1.85; color: var(--green-ink); }
+    .modal-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; }
+    .modal-body h3 { margin-bottom: 14px; font-size: 1.125rem; font-weight: 600; color: var(--green-ink); line-height: 1.4; }
+    .dot-list li { position: relative; padding-left: 24px; line-height: 1.75; }
+    .dot-list li + li { margin-top: 8px; }
+    .dot-list li::before { content: ""; position: absolute; left: 0; top: .6em; width: 9px; height: 9px; border-radius: 50%; background: var(--green); }
+    .steps { counter-reset: step; }
+    .steps li { position: relative; padding: 2px 0 2px 54px; min-height: 40px; counter-increment: step; }
+    .steps li + li { margin-top: 16px; }
+    .steps li::before {
+      content: counter(step); position: absolute; left: 0; top: 0;
+      display: grid; place-items: center; width: 38px; height: 38px;
+      border-radius: 50%; background: var(--mint); color: var(--green-deep);
+      font-weight: 600; font-size: .95rem; line-height: 1;
+    }
+    .caution { padding: 20px 24px; background: var(--mint); border-left: 5px solid var(--green); border-radius: 0 0 0 28px; color: var(--green-ink); font-size: .95rem; }
+    .caution strong { display: block; margin-bottom: 2px; font-weight: 600; }
+    .video { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 0 0 0 40px; background: #000; }
+    .video iframe, .video video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .modal-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding-top: 22px; border-top: 1px solid var(--line); font-size: .85rem; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1100px) {
+      .header-inner { padding: 16px 20px; }
+      .nav-toggle { display: inline-flex; }
+      .menu {
+        display: none; position: absolute; left: 0; right: 0; top: 100%;
+        flex-direction: column; align-items: stretch; gap: 8px;
+        padding: 8px 20px 24px; background: #fff; box-shadow: 0 18px 30px rgba(0, 0, 0, .1);
+      }
+      .menu.open { display: flex; }
+      .menu nav ul { flex-direction: column; align-items: stretch; }
+      .menu nav a { padding: 12px 4px; }
+      .auth { flex-direction: column; gap: 12px; }
+      .hero-ring, .hero-dots { display: none; }
+      .hero { padding: 72px 0 150px; }
+    }
+    @media (max-width: 820px) {
+      .suggest-card { grid-template-columns: 1fr; border-radius: 0 0 0 72px; }
+      .suggest-art { min-height: 260px; order: -1; }
+      .suggest-dots { display: none; }
+      .modal-cols { grid-template-columns: 1fr; }
+      .modal-head { padding: 30px 84px 28px 24px; }
+      .modal-body { padding: 26px 24px 34px; }
+      .modal-close { top: 18px; right: 18px; }
+    }
+    @media (max-width: 560px) {
+      .logo { font-size: 1.75rem; }
+      .search button span { display: none; }
+      .search button { padding: 0 20px; }
+      .to-top { right: 16px; bottom: 16px; width: 54px; height: 54px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
 </head>
 <body>
-    <!-- ? Preloader Start -->
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img src="/static/img/logo/loder.png" alt="">
-                </div>
-            </div>
+
+  <!-- ================= Header ================= -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">Health couch.</a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+
+      <div class="menu" id="site-menu">
+        <nav aria-label="Main">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="cures.html" aria-current="page">Cures</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="auth">
+          <a class="btn btn-green" href="login.html">Login</a>
+          <a class="btn btn-green" href="admin-login.html">Admin Login</a>
         </div>
-    </div>
-    <!-- Preloader Start -->
-    <header>
-        <!--? Header Start -->
-        <div class="header-area">
-            <div class="main-header header-sticky">
-                <div class="container-fluid">
-                    <div class="row align-items-center">
-                        <!-- Logo -->  
-                        <div class="col-xl-2 col-lg-2 col-md-1">
-                            <div class="logo">
-                                <a href="index.html"><img src="/static/img/logo/logo.png" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-xl-10 col-lg-10 col-md-10">
-                            <div class="menu-main d-flex align-items-center justify-content-end">
-                                <!-- Main-menu -->
-                                <div class="main-menu f-right d-none d-lg-block">
-                                    <nav> 
-                                        {% comment %} <ul id="navigation">
-                                            <li><a href="{% url 'indexpage' %}">Home</a></li>
-                                            <li><a href="{% url 'aboutpage' %}">About</a></li>
-                                            <li><a href="{% url 'servicespage' %}">Cures</a></li> {% endcomment %}
-                                            {% comment %} <li><a href="{% url 'blogpage' %}">Blog</a>
-                                                <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="blog_details.html">Blog Details</a></li>
-                                                    <li><a href="elements.html">Element</a></li>
-                                                </ul> {% endcomment %}
-                                            {% comment %} </li>
-                                            <li><a href="{% url 'contactpage' %}">Contact</a></li>
-                                        </ul> {% endcomment %}
-                                    </nav>
-                                </div>
-                                <div class="header-right-btn f-right d-none d-lg-block ml-15">
-                                    <a href="{% url 'loginpage' %}" class="btn header-btn">Login</a>
-                                </div>
-                                <div class="header-right-btn f-right d-none d-lg-block ml-15">
-                                    <a href="{% url 'adminloginpage' %}" class="btn header-btn">Admin Login</a>
-                                </div>
-                            </div>
-                        </div>   
-                        <!-- Mobile Menu -->
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Header End -->
-    </header>
-    <main>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="search-container">
-                        <input type="text" class="form-control search-input" placeholder="Search...">
-                        <i class="fas fa-search search-icon"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--? Slider Area Start-->
-        <div class="slider-area slider-area2">
-            <div class="slider-active dot-style">
-                <!-- Slider Single -->
-                <div class="single-slider  d-flex align-items-center slider-height2">
-                    <div class="container">
-                        <div class="row align-items-center">
-                            <div class="col-xl-7 col-lg-8 col-md-10 ">
-                             <div class="hero-wrapper">
-                                <div class="hero__caption">
-                                    <h1 data-animation="fadeInUp" data-delay=".3s">Cures</h1>
-                                    <p data-animation="fadeInUp" data-delay=".6s">Almost before we knew it, we<br> had left the ground</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>    
-        </div>
-    </div>
-    <!-- Slider Area End -->
-    <section class="wantToWork-area">
-        <div class="container">
-            <div class="wants-wrapper w-padding2">
-                <div class="row align-items-center justify-content-between">
-                    <div class="col-xl-7 col-lg-9 col-md-8">
-                        <div class="wantToWork-caption wantToWork-caption2">
-                            <h2>Happy mind <br>healthy life</h2>
-                            <p>Almost before we knew it, we<br> had left the ground</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-3 col-md-4">
-                        <a href="#" class="btn f-right sm-left">Take a Service</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--? Services Area Start -->
-    <div class="service-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="single-cat text-center mb-50">
-                        <div class="cat-icon">
-                            <img src="/static/img/icon/services1.svg" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Physical Activity</a></h5>
-                            <p>Praesent porttitor, nulla vitae  posuere iaculis, arcu nisl dignissim dolor, a pretium mi  sem ut ipsum.</p>
-                            <a href="services.html" class="plus-btn"><i class="ti-plus"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="single-cat text-center mb-50">
-                        <div class="cat-icon">
-                            <img src="/static/img/icon/services2.svg" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Physical Activity</a></h5>
-                            <p>Praesent porttitor, nulla vitae  posuere iaculis, arcu nisl dignissim dolor, a pretium mi  sem ut ipsum.</p>
-                            <a href="services.html" class="plus-btn"><i class="ti-plus"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="single-cat text-center mb-50">
-                        <div class="cat-icon">
-                            <img src="/static/img/icon/services3.svg" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Physical Activity</a></h5>
-                            <p>Praesent porttitor, nulla vitae  posuere iaculis, arcu nisl dignissim dolor, a pretium mi  sem ut ipsum.</p>
-                            <a href="services.html" class="plus-btn"><i class="ti-plus"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Services Area End -->
-    <!--? video_start -->
-    <div class="container pt-40">
-        <div class="video-area section-bg2 d-flex align-items-center"  data-background="/static/img/gallery/video-bg.png">
-            <div class="video-wrap position-relative">
-                <div class="video-icon" >
-                    <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0"><i class="fas fa-play"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- video_end -->      
-    <!--? Testimonial Area Start -->
-    <section class="testimonial-area testimonial-padding fix pb-bottom">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class=" col-lg-9">
-                    <div class="about-caption">
-                        <!-- Testimonial Start -->
-                        <div class="h1-testimonial-active dot-style">
-                            <!-- Single Testimonial -->
-                            <div class="single-testimonial position-relative">
-                                <div class="testimonial-caption">
-                                    <img src="/static/img/icon/quotes-sign.png" alt="" class="quotes-sign">
-                                    <p>"The automated process starts as soon as your clothe go into the machine. This site outcome is gleaming clothe. Placeholder text commonly used. In publishing and graphic.</p>
-                                </div>
-                                <!-- founder -->
-                                <div class="testimonial-founder d-flex align-items-center">
-                                    <div class="founder-img">
-                                        <img src="/static/img/icon/testimonial.png" alt="">
-                                    </div>
-                                    <div class="founder-text">
-                                        <span>Robart Brown</span>
-                                        <p>Creative designer at Colorlib</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Single Testimonial -->
-                            <div class="single-testimonial position-relative">
-                                <div class="testimonial-caption">
-                                    <img src="/static/img/icon/quotes-sign.png" alt="" class="quotes-sign">
-                                    <p>"The automated process starts as soon as your clothe go into the machine. This site outcome is gleaming clothe. Placeholder text commonly used. In publishing and graphic.</p>
-                                </div>
-                                <!-- founder -->
-                                <div class="testimonial-founder d-flex align-items-center">
-                                    <div class="founder-img">
-                                        <img src="/static/img/icon/testimonial.png" alt="">
-                                    </div>
-                                    <div class="founder-text">
-                                        <span>Robart Brown</span>
-                                        <p>Creative designer at Colorlib</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Testimonial End -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--? Testimonial Area End -->
-    
-    <!--? About Law Start-->
-    <section class="about-low-area mt-80">
-        <div class="container">
-            <div class="about-cap-wrapper">
-                <div class="row">
-                    <div class="col-xl-5  col-lg-6 col-md-10 offset-xl-1">
-                        <div class="about-caption mb-50">
-                            <!-- Section Tittle -->
-                            <div class="section-tittle mb-35">
-                                <h2>100% satisfaction guaranteed.</h2>
-                            </div>
-                            <p>Almost before we knew it, we had left the ground</p>
-                            <a href="about.html" class="border-btn">Make an Appointment</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12">
-                        <!-- about-img -->
-                        <div class="about-img">
-                            <div class="about-font-img">
-                                <img src="/static/img/gallery/about2.png" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- About Law End-->
-</main>
-<footer>
-    <div class="footer-wrappr section-bg3" data-background="/static/img/gallery/footer-bg.png">
-        <div class="footer-area footer-padding ">
-            <div class="container">
-                <div class="row justify-content-between">
-                    <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12">
-                        <div class="single-footer-caption mb-50">
-                            <!-- logo -->
-                            <div class="footer-logo mb-25">
-                                <a href="index.html"><img src="/static/img/logo/logo2_footer.png" alt=""></a>
-                            </div>
-                            <d iv class="header-area">
-                                <div class="main-header main-header2">
-                                    <div class="menu-main d-flex align-items-center justify-content-start">
-                                        <!-- Main-menu -->
-                                        <div class="main-menu main-menu2">
-                                            <nav> 
-                                                <ul>
-                                                    <li><a href="{% url 'indexpage' %}">Home</a></li>
-                                                    <li><a href="{% url 'aboutpage' %}">About</a></li>
-                                                    <li><a href="{% url 'servicespage' %}">Cures</a></li>
-                                                    {% comment %} <li><a href="{% url 'blogpage' %}">Blog</a></li> {% endcomment %}
-                                                    <li><a href="{% url 'contactpage' %}">Contact</a></li>
-                                                </ul>
-                                            </nav>
-                                        </div>
-                                    </div>  
-                                </div>
-                            </d>
-                            <!-- social -->
-                            <div class="footer-social mt-50">
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                        <div class="single-footer-caption">
-                            <div class="footer-tittle mb-50">
-                                <h4>Subscribe newsletter</h4>
-                            </div>
-                            <!-- Form -->
-                            <div class="footer-form">
-                                <div id="mc_embed_signup">
-                                    <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="subscribe_form relative mail_part" novalidate="true">
-                                        <input type="email" name="EMAIL" id="newsletter-form-email" placeholder=" Email Address " class="placeholder hide-on-focus" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your email'">
-                                        <div class="form-icon">
-                                            <button type="submit" name="submit" id="newsletter-submit" class="email_icon newsletter-submit button-contactForm">
-                                                Subscribe
-                                            </button>
-                                        </div>
-                                        <div class="mt-10 info"></div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="footer-tittle">
-                                <div class="footer-pera">
-                                    <p>Praesent porttitor, nulla vitae posuere iaculis, arcu nisl dignissim dolor, a pretium misem ut ipsum.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- footer-bottom area -->
-        <div class="footer-bottom-area">
-            <div class="container">
-                <div class="footer-border">
-                    <div class="row">
-                        <div class="col-xl-10 ">
-                            <div class="footer-copy-right">
-                                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
       </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= Hero + search ================= -->
+    <section class="hero" aria-labelledby="page-title">
+      <div class="container">
+        <div class="hero-copy">
+          <h1 id="page-title">Cures</h1>
+          <p class="hero-lead">Search traditional home remedies by ailment or ingredient.</p>
+
+          <form class="search" id="search-form" role="search" autocomplete="off">
+            <label class="visually-hidden" for="q">Search remedies</label>
+            <input id="q" name="q" type="search" placeholder="Try sinus, indigestion or ginger" enterkeyhint="search">
+            <button type="submit">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <span>Search</span>
+            </button>
+          </form>
+
+          <div class="try" id="try-hero">
+            <span>Popular:</span>
+            <button type="button" data-q="sinus">Sinus</button>
+            <button type="button" data-q="indigestion">Indigestion</button>
+            <button type="button" data-q="sore throat">Sore throat</button>
+            <button type="button" data-q="sleep">Sleep</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-dots dots" aria-hidden="true"></div>
+      <!-- Swap this illustration for an <img> of your own if you like -->
+      <div class="hero-ring" aria-hidden="true">
+        <svg viewBox="0 0 400 400" fill="none">
+          <path d="M70 214h260c0 78-52 124-130 124S70 292 70 214Z" fill="#5aab4f"/>
+          <rect x="58" y="202" width="284" height="22" rx="11" fill="#1f4a25"/>
+          <rect x="146" y="336" width="108" height="18" rx="9" fill="#1f4a25"/>
+          <rect x="232" y="46" width="36" height="200" rx="18" fill="#8fc987" transform="rotate(24 250 146)"/>
+          <ellipse cx="150" cy="150" rx="18" ry="50" fill="#2f7a3a" transform="rotate(-32 150 150)"/>
+          <ellipse cx="112" cy="176" rx="14" ry="38" fill="#4d9a48" transform="rotate(-62 112 176)"/>
+          <ellipse cx="190" cy="132" rx="15" ry="42" fill="#3f8a41" transform="rotate(-8 190 132)"/>
+          <circle cx="205" cy="256" r="16" fill="#f0b429"/>
+          <circle cx="240" cy="280" r="11" fill="#e07a3f"/>
+          <circle cx="170" cy="284" r="12" fill="#f7d774"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ================= Results ================= -->
+    <section class="results" id="results" aria-labelledby="results-title">
+      <div class="container">
+        <div class="results-bar">
+          <h2 class="results-title" id="results-title" aria-live="polite" aria-atomic="true"></h2>
+          <div class="filters" id="filters" role="group" aria-label="Filter by type of remedy"></div>
+        </div>
+
+        <div class="grid" id="grid"></div>
+
+        <div class="empty" id="empty" hidden>
+          <div class="orb" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          </div>
+          <h3 id="empty-title">No remedies found</h3>
+          <p>Check the spelling, try a single word like “cough”, or search by an ingredient such as “ginger”.</p>
+          <div class="try" id="try-empty">
+            <button type="button" data-q="cough">Cough</button>
+            <button type="button" data-q="acidity">Acidity</button>
+            <button type="button" data-q="turmeric">Turmeric</button>
+          </div>
+          <a class="btn btn-deep" href="#suggest">Know this remedy? Suggest it</a>
+        </div>
+
+        <p class="disclaimer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22c5.5 0 9-4 9-9 0-3-1-6-3-8.5-1.2 1.4-3 2.3-5 2.5C11 4.5 10 3 9 2 5 5 3 8.5 3 13c0 5 3.5 9 9 9Z"/><path d="M12 22v-8"/></svg>
+          <span>These remedies are shared for general wellness information and reflect traditional use. They are not a substitute for professional medical advice. See a doctor if symptoms last, get worse, or you are pregnant, nursing or taking medication.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= Suggest a remedy ================= -->
+    <section class="suggest" id="suggest" aria-labelledby="suggest-title">
+      <div class="container" style="position:relative">
+        <div class="suggest-card on-green">
+          <div class="suggest-copy">
+            <h2 id="suggest-title">Know A Traditional Home Remedy?</h2>
+            <p>Share your trusted family cures and help others find natural, holistic healing. Our team reviews every submission before it goes live.</p>
+            <a class="btn btn-outline-light" href="suggest-remedy.html">Suggest a Remedy</a>
+          </div>
+          <div class="suggest-art" aria-hidden="true">
+            <svg viewBox="0 0 400 480" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="480" fill="#efece6"/>
+              <g fill="#3f8a41"><ellipse cx="40" cy="70" rx="14" ry="44" transform="rotate(-25 40 70)"/><ellipse cx="365" cy="34" rx="16" ry="48" transform="rotate(40 365 34)"/><ellipse cx="372" cy="430" rx="14" ry="44" transform="rotate(-40 372 430)"/></g>
+              <g stroke="#a9aeb6" stroke-width="2">
+                <g><rect x="70" y="60" width="200" height="9" rx="4.5" fill="#cfd3d9"/><ellipse cx="300" cy="64" rx="56" ry="34" fill="#dfe2e7"/><ellipse cx="300" cy="61" rx="43" ry="25" fill="#1e1e1e" stroke="none"/></g>
+                <g><rect x="80" y="152" width="190" height="9" rx="4.5" fill="#cfd3d9"/><ellipse cx="300" cy="156" rx="56" ry="34" fill="#dfe2e7"/><ellipse cx="300" cy="153" rx="43" ry="25" fill="#c58a1a" stroke="none"/></g>
+                <g><rect x="70" y="244" width="200" height="9" rx="4.5" fill="#cfd3d9"/><ellipse cx="300" cy="248" rx="56" ry="34" fill="#dfe2e7"/><ellipse cx="300" cy="245" rx="43" ry="25" fill="#c8401f" stroke="none"/></g>
+                <g><rect x="80" y="336" width="190" height="9" rx="4.5" fill="#cfd3d9"/><ellipse cx="300" cy="340" rx="56" ry="34" fill="#dfe2e7"/><ellipse cx="300" cy="337" rx="43" ry="25" fill="#fbfbfb" stroke="none"/></g>
+                <g><rect x="70" y="428" width="200" height="9" rx="4.5" fill="#cfd3d9"/><ellipse cx="300" cy="432" rx="56" ry="34" fill="#dfe2e7"/><ellipse cx="300" cy="429" rx="43" ry="25" fill="#f0d98a" stroke="none"/></g>
+              </g>
+              <g fill="#d9341f"><ellipse cx="60" cy="210" rx="9" ry="22" transform="rotate(-60 60 210)"/><ellipse cx="342" cy="398" rx="8" ry="20" transform="rotate(70 342 398)"/></g>
+            </svg>
+          </div>
+        </div>
+        <div class="suggest-dots dots" aria-hidden="true"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= Footer ================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <a class="logo" href="index.html">Health couch.</a>
+        <nav class="footer-nav" aria-label="Footer">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="cures.html">Cures</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+      <p class="footer-note">&copy; <span id="year">2026</span> Health couch. Traditional knowledge, reviewed by our team.</p>
+    </div>
   </footer>
-  <!-- Scroll Up -->
-  <div id="back-top" >
-    <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
-</div>
 
-<!-- JS here -->
+  <button class="to-top" id="to-top" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V6"/><path d="m6 11 6-6 6 6"/><path d="M5 3h14"/></svg>
+  </button>
 
-<script src="/static/js/vendor/modernizr-3.5.0.min.js"></script>
-<!-- Jquery, Popper, Bootstrap -->
-<script src="/static/js/vendor/jquery-1.12.4.min.js"></script>
-<script src="/static/js/popper.min.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
-<!-- Jquery Mobile Menu -->
-<script src="/static/js/jquery.slicknav.min.js"></script>
+  <!-- ================= Remedy details ================= -->
+  <dialog id="remedy-dialog" aria-labelledby="dialog-title"></dialog>
 
-<!-- Jquery Slick , Owl-Carousel Plugins -->
-<script src="/static/js/owl.carousel.min.js"></script>
-<script src="/static/js/slick.min.js"></script>
-<!-- One Page, Animated-HeadLin -->
-<script src="/static/js/wow.min.js"></script>
-<script src="/static/js/animated.headline.js"></script>
-<script src="/static/js/jquery.magnific-popup.js"></script>
+  <!-- Django: {{ remedies|json_script:"remedy-data" }} -->
 
-<!-- Date Picker -->
-<script src="/static/js/gijgo.min.js"></script>
-<!-- Nice-select, sticky -->
-<script src="/static/js/jquery.nice-select.min.js"></script>
-<script src="/static/js/jquery.sticky.js"></script>
+  <script>
+  (() => {
+    'use strict';
 
-<!-- counter , waypoint,Hover Direction -->
-<script src="/static/js/jquery.counterup.min.js"></script>
-<script src="/static/js/waypoints.min.js"></script>
-<script src="/static/js/jquery.countdown.min.js"></script>
-<script src="/static/js/hover-direction-snake.min.js"></script>
+    /* ------------------------------------------------------------------
+       Sample data. Replace with your database records (see note at top).
+       image and video are optional; leave them empty to hide them.
+    ------------------------------------------------------------------ */
+    const SAMPLE_REMEDIES = [
+      {
+        id: 1, name: 'Tulsi Ginger Kadha', issue: 'Cold and cough', category: 'cold',
+        summary: 'A warm herbal decoction that soothes a scratchy throat and eases the first signs of a cold.',
+        ingredients: ['Tulsi leaves (10–12)', 'Fresh ginger (1 inch)', 'Black pepper (4–5, crushed)', 'Jaggery or honey (1 tsp)', 'Water (2 cups)'],
+        steps: ['Crush the ginger and black pepper coarsely.', 'Add the tulsi, ginger, pepper and water to a pan and bring to a boil.', 'Simmer on low heat for 8–10 minutes, until it reduces to about one cup.', 'Strain into a cup. Once it is warm rather than hot, stir in the jaggery or honey.', 'Sip warm, once or twice a day.'],
+        benefits: ['Warms the body and soothes the throat', 'Traditionally used to ease a blocked, heavy chest', 'Gentle enough to sip daily while you have a cold'],
+        caution: 'Leave out the honey for children under 1 year. Go easy on black pepper if you have acidity.',
+        image: '', video: '', verified: true,
+        keywords: ['cough', 'cold', 'flu', 'sore throat', 'kadha', 'tulsi', 'ginger', 'phlegm']
+      },
+      {
+        id: 2, name: 'Ajwain Steam Inhalation', issue: 'Sinus congestion', category: 'sinus',
+        summary: 'A simple steam with carom seeds to help loosen a blocked nose and ease pressure around the sinuses.',
+        ingredients: ['Ajwain (carom seeds), 1 tsp', 'Hot water (1 litre)', 'A clean towel'],
+        steps: ['Boil the water and pour it into a wide, stable bowl.', 'Stir in the ajwain.', 'Sit with your face about 30 cm above the bowl and drape the towel over your head.', 'Breathe in slowly through your nose for about 5 minutes. Pause if you feel light-headed.', 'Dry your face and rest in a warm room for a few minutes.'],
+        benefits: ['Helps loosen a blocked nose', 'Eases the heavy feeling around the forehead and cheeks', 'Takes about ten minutes start to finish'],
+        caution: 'Keep the bowl on a steady surface and hot water away from children to avoid burns. Stop if breathing feels uncomfortable.',
+        image: '', video: '', verified: true,
+        keywords: ['blocked nose', 'congestion', 'sinusitis', 'steam', 'headache', 'nose', 'carom']
+      },
+      {
+        id: 3, name: 'Jeera Saunf Dhania Water', issue: 'Indigestion and bloating', category: 'digestion',
+        summary: 'A cooling three-seed water sipped through the day to settle a heavy stomach.',
+        ingredients: ['Cumin seeds (1 tsp)', 'Fennel seeds (1 tsp)', 'Coriander seeds (1 tsp)', 'Water (1 litre)'],
+        steps: ['Lightly crush the seeds.', 'Boil them in the water for 5 minutes.', 'Cover and let steep for 10 minutes, then strain.', 'Sip warm between meals through the day.'],
+        benefits: ['Traditionally used to ease gas and bloating', 'Helps settle a heavy stomach after meals', 'Caffeine-free, so it suits any time of day'],
+        caution: 'Check with your doctor before regular use if you are pregnant or take regular medication.',
+        image: '', video: '', verified: true,
+        keywords: ['stomach', 'gas', 'bloating', 'heaviness', 'digestion', 'cumin', 'fennel', 'jeera']
+      },
+      {
+        id: 4, name: 'Haldi Doodh (Golden Milk)', issue: 'Cold and body ache', category: 'cold',
+        summary: 'Warm turmeric milk, a household staple for winter colds and tired, achy evenings.',
+        ingredients: ['Milk (1 cup)', 'Turmeric powder (½ tsp)', 'Black pepper (a pinch)', 'Jaggery or honey, to taste'],
+        steps: ['Warm the milk on low heat.', 'Whisk in the turmeric and black pepper and simmer for 3–4 minutes.', 'Take it off the heat, let it cool a little, and sweeten to taste.', 'Drink warm, ideally before bed.'],
+        benefits: ['Comforting when you feel run down', 'Traditionally used to ease body aches', 'Black pepper is the classic pairing for turmeric'],
+        caution: 'Turmeric in food amounts is generally fine, but check with your doctor if you take blood thinners or have gallbladder problems.',
+        image: '', video: '', verified: true,
+        keywords: ['haldi', 'turmeric', 'golden milk', 'cold', 'body pain', 'immunity', 'aches', 'winter']
+      },
+      {
+        id: 5, name: 'Roasted Jeera Chaas', issue: 'Acidity', category: 'digestion',
+        summary: 'Spiced buttermilk that cools the stomach after a heavy or spicy meal.',
+        ingredients: ['Plain curd (½ cup)', 'Water (1 cup)', 'Roasted cumin powder (½ tsp)', 'Rock salt (a pinch)', 'Mint leaves (a few)'],
+        steps: ['Whisk the curd with the water until smooth.', 'Stir in the roasted cumin powder, rock salt and torn mint leaves.', 'Serve fresh and cool, not iced, after lunch.'],
+        benefits: ['Cooling after spicy meals', 'Light on the stomach', 'Made from everyday kitchen staples'],
+        caution: 'Traditionally avoided at night or during a cold, as curd can increase mucus for some people.',
+        image: '', video: '', verified: true,
+        keywords: ['acidity', 'heartburn', 'buttermilk', 'chaas', 'gas', 'burning', 'curd', 'cumin']
+      },
+      {
+        id: 6, name: 'Honey and Black Pepper Paste', issue: 'Dry cough', category: 'cold',
+        summary: 'A small spoon of honey with black pepper, traditionally taken to calm a tickly cough.',
+        ingredients: ['Honey (1 tsp)', 'Black pepper powder (a pinch)', 'Ginger juice (¼ tsp, optional)'],
+        steps: ['Mix the pepper into the honey. Add the ginger juice if you like.', 'Take it slowly so it coats the throat.', 'Wait 10 minutes before drinking water.', 'Repeat up to twice a day.'],
+        benefits: ['Coats and soothes an irritated throat', 'Quick, with no cooking needed', 'Used in many households for a dry cough'],
+        caution: 'Never give honey to children under 1 year. See a doctor if a cough lasts more than two weeks.',
+        image: '', video: '', verified: true,
+        keywords: ['dry cough', 'cough', 'throat', 'honey', 'pepper', 'tickle', 'kali mirch']
+      },
+      {
+        id: 7, name: 'Warm Salt and Turmeric Gargle', issue: 'Sore throat', category: 'throat',
+        summary: 'A warm saltwater gargle with a pinch of turmeric to ease a scratchy, sore throat.',
+        ingredients: ['Warm water (1 glass)', 'Salt (½ tsp)', 'Turmeric powder (a pinch)'],
+        steps: ['Stir the salt and turmeric into comfortably warm water until dissolved.', 'Tilt your head back and gargle for 20–30 seconds.', 'Spit it out and repeat two or three times.', 'Do this two or three times a day.'],
+        benefits: ['Soothes irritation and swelling in the throat', 'Uses two pantry items', 'Easy to repeat through the day'],
+        caution: 'Do not swallow the mixture. If a young child cannot gargle, ask a doctor for alternatives.',
+        image: '', video: '', verified: true,
+        keywords: ['sore throat', 'gargle', 'salt', 'throat pain', 'tonsil', 'voice', 'hoarse', 'haldi']
+      },
+      {
+        id: 8, name: 'Ashwagandha Night Milk', issue: 'Stress and restless sleep', category: 'sleep',
+        summary: 'A calming bedtime milk with ashwagandha, traditionally taken to unwind after a long day.',
+        ingredients: ['Warm milk (1 cup)', 'Ashwagandha powder (¼ tsp)', 'Cardamom powder (a pinch)', 'Honey or jaggery, to taste'],
+        steps: ['Warm the milk gently with the ashwagandha and cardamom for 3–4 minutes.', 'Let it cool until comfortably warm.', 'Sweeten to taste and drink about 30 minutes before bed.'],
+        benefits: ['A calming end-of-day ritual', 'Traditionally used to ease everyday stress', 'Pleasant, mildly earthy taste'],
+        caution: 'Not recommended during pregnancy or with thyroid conditions unless your doctor agrees. Do not combine with sedatives.',
+        image: '', video: '', verified: true,
+        keywords: ['sleep', 'insomnia', 'stress', 'anxiety', 'relax', 'night', 'ashwagandha', 'tension']
+      },
+      {
+        id: 9, name: 'Warm Sesame Foot Massage', issue: 'Trouble falling asleep', category: 'sleep',
+        summary: 'A slow foot massage with warm sesame oil before bed, a traditional Ayurvedic wind-down known as padabhyanga.',
+        ingredients: ['Sesame oil (1–2 tbsp)', 'A small bowl of warm water', 'Clean cotton socks'],
+        steps: ['Warm the oil by standing its container in the bowl of warm water for a few minutes.', 'Massage each foot for about 5 minutes with slow, firm circles, focusing on the soles and toes.', 'Wipe off the excess oil with a warm, damp cloth and put on the socks.', 'Do this at bedtime.'],
+        benefits: ['Helps the body slow down before sleep', 'Leaves feet soft and relaxed', 'A screen-free bedtime routine'],
+        caution: 'Test a little oil on your skin first, and take care on slippery floors after oiling.',
+        image: '', video: '', verified: true,
+        keywords: ['insomnia', 'sleep', 'feet', 'massage', 'oil', 'tired', 'relax', 'padabhyanga', 'sesame', 'til']
+      },
+      {
+        id: 10, name: 'Ginger Lemon Sip', issue: 'Nausea and queasy stomach', category: 'digestion',
+        summary: 'Fresh ginger with a squeeze of lemon and a pinch of rock salt, sipped slowly when the stomach feels unsettled.',
+        ingredients: ['Fresh ginger (1 inch, grated)', 'Lemon juice (1 tsp)', 'Rock salt (a pinch)', 'Warm water (1 cup)'],
+        steps: ['Steep the grated ginger in hot water for 5 minutes.', 'Strain and let it cool until warm, then stir in the lemon juice and rock salt.', 'Sip slowly, in small amounts.'],
+        benefits: ['Ginger is a long-standing remedy for queasiness', 'Light and hydrating', 'Ready in about 5 minutes'],
+        caution: 'If nausea lasts more than a day, or comes with severe pain, fever or repeated vomiting, please see a doctor.',
+        image: '', video: '', verified: true,
+        keywords: ['nausea', 'vomiting', 'queasy', 'stomach', 'ginger', 'motion sickness', 'lemon', 'adrak']
+      }
+    ];
 
-<!-- contact js -->
-<script src="/static/js/contact.js"></script>
-<script src="/static/js/jquery.form.js"></script>
-<script src="/static/js/jquery.validate.min.js"></script>
-<script src="/static/js/mail-script.js"></script>
-<script src="/static/js/jquery.ajaxchimp.min.js"></script>
+    let REMEDIES = SAMPLE_REMEDIES;
+    const dataEl = document.getElementById('remedy-data');
+    if (dataEl) {
+      try { REMEDIES = JSON.parse(dataEl.textContent); }
+      catch (err) { console.error('Could not read remedy-data, using sample remedies.', err); }
+    }
 
-<!-- Jquery Plugins, main Jquery -->	
-<script src="/static/js/plugins.js"></script>
-<script src="/static/js/main.js"></script>
+    const CATEGORIES = [
+      { id: 'all', label: 'All' },
+      { id: 'cold', label: 'Cold & cough' },
+      { id: 'sinus', label: 'Sinus' },
+      { id: 'digestion', label: 'Digestion' },
+      { id: 'throat', label: 'Throat' },
+      { id: 'sleep', label: 'Sleep & stress' }
+    ];
+    const catLabel = id => (CATEGORIES.find(c => c.id === id) || {}).label || '';
 
+    /* Words people type that we map onto how remedies are written */
+    const SYNONYMS = {
+      stomach: ['indigestion', 'bloating', 'acidity', 'nausea'], tummy: ['indigestion', 'bloating'],
+      gassy: ['gas', 'bloating'], gas: ['bloating'], heartburn: ['acidity'], acid: ['acidity'], burping: ['bloating'],
+      insomnia: ['sleep'], sleepless: ['sleep'], anxiety: ['stress'], tension: ['stress'], tired: ['sleep', 'stress'],
+      flu: ['cold'], fever: ['cold'], phlegm: ['cough'], mucus: ['cough', 'sinus'],
+      congestion: ['sinus', 'blocked nose'], nasal: ['sinus'], nose: ['sinus'], sinusitis: ['sinus'],
+      vomiting: ['nausea'], vomit: ['nausea'], queasy: ['nausea'],
+      tonsil: ['throat'], voice: ['throat'], hoarse: ['throat']
+    };
+    const STOP = new Set(['a', 'an', 'the', 'for', 'and', 'of', 'in', 'my', 'i', 'have', 'with', 'to', 'is', 'remedy', 'remedies', 'cure', 'cures']);
+
+    /* ---------------- helpers ---------------- */
+    const $ = sel => document.querySelector(sel);
+    const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const norm = s => String(s == null ? '' : s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const stem = t => (t.length > 3 && t.endsWith('s') ? t.slice(0, -1) : t);
+    const escRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const safeUrl = u => {
+      if (!u) return '';
+      try {
+        const x = new URL(u, location.href);
+        return ['http:', 'https:', location.protocol].includes(x.protocol) ? u : '';
+      } catch (e) { return ''; }
+    };
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const ICONS = {
+      cold: '<path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>',
+      sinus: '<path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/>',
+      digestion: '<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>',
+      throat: '<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>',
+      sleep: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>'
+    };
+    const icon = cat => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[cat] || ICONS.digestion}</svg>`;
+    const CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+    const PLUS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+    const badge = '<span class="badge">' + '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.5 2.5L16 9.5"/></svg>' + 'Verified by our team</span>';
+
+    /* ---------------- search index ---------------- */
+    const index = REMEDIES.map(r => ({
+      r,
+      name: norm(r.name),
+      issue: norm(r.issue),
+      keys: norm([...(r.keywords || []), catLabel(r.category)].join(' ')),
+      ing: norm((r.ingredients || []).join(' ')),
+      rest: norm([r.summary, ...(r.benefits || []), ...(r.steps || [])].join(' '))
+    }));
+
+    const state = { q: '', cat: 'all' };
+
+    const rawWords = q => norm(q).split(/[^a-z0-9]+/).filter(Boolean);
+    function tokensOf(q) {
+      return rawWords(q).filter(t => t.length > 1 && !STOP.has(t));
+    }
+
+    function score(ix, tokens) {
+      let total = 0;
+      for (const t of tokens) {
+        const alts = [stem(t), ...(SYNONYMS[t] || SYNONYMS[stem(t)] || [])];
+        let best = 0;
+        for (const a of alts) {
+          if (ix.name.includes(a)) best = Math.max(best, 5);
+          if (ix.issue.includes(a)) best = Math.max(best, 4);
+          if (ix.keys.includes(a)) best = Math.max(best, 3);
+          if (ix.ing.includes(a)) best = Math.max(best, 2);
+          if (ix.rest.includes(a)) best = Math.max(best, 1);
+        }
+        if (!best) return 0;
+        total += best;
+      }
+      return total;
+    }
+
+    function search() {
+      const tokens = tokensOf(state.q);
+      // Something was typed, but only stray characters (e.g. "x"): nothing can match
+      if (!tokens.length && rawWords(state.q).some(w => !STOP.has(w))) return [];
+      let hits = index
+        .filter(ix => state.cat === 'all' || ix.r.category === state.cat)
+        .map((ix, i) => ({ r: ix.r, i, s: tokens.length ? score(ix, tokens) : 1 }))
+        .filter(h => h.s > 0);
+      if (tokens.length) hits.sort((a, b) => b.s - a.s || a.i - b.i);
+      return hits.map(h => h.r);
+    }
+
+    /* Highlight typed words inside remedy text */
+    let hlRe = null;
+    function buildHighlighter() {
+      const terms = new Set();
+      tokensOf(state.q).forEach(t => { if (t.length > 1) { terms.add(t); terms.add(stem(t)); } });
+      const list = [...terms].filter(t => t.length > 1).sort((a, b) => b.length - a.length).map(escRe);
+      hlRe = list.length ? new RegExp('(' + list.join('|') + ')', 'i') : null;
+    }
+    const hl = text => {
+      const s = String(text == null ? '' : text);
+      if (!hlRe) return esc(s);
+      return s.split(hlRe).map((part, i) => (i % 2 ? '<mark>' + esc(part) + '</mark>' : esc(part))).join('');
+    };
+
+    /* ---------------- rendering ---------------- */
+    const grid = $('#grid');
+    const empty = $('#empty');
+    const title = $('#results-title');
+    const input = $('#q');
+
+    function cardHTML(r) {
+      const img = safeUrl(r.image);
+      const pills = (r.ingredients || []).slice(0, 4).map(i => `<li>${hl(i.replace(/\s*\(.*?\)\s*/g, '').replace(/,.*$/, ''))}</li>`).join('');
+      return `
+        <article class="remedy-card">
+          <div class="remedy-card__head on-green${img ? ' has-image' : ''}"${img ? ` style="--img:url('${esc(img)}')"` : ''}>
+            <span class="orb">${icon(r.category)}</span>
+            <h3 class="remedy-card__name">${hl(r.name)}</h3>
+          </div>
+          <div class="remedy-card__body">
+            <p class="issue">${hl(r.issue)}</p>
+            <p class="remedy-card__summary">${hl(r.summary)}</p>
+            <ul class="pills" aria-label="Main ingredients">${pills}</ul>
+            <div class="remedy-card__foot">
+              ${r.verified ? badge : '<span></span>'}
+              <button class="open" type="button" data-id="${esc(r.id)}" aria-label="View how to make ${esc(r.name)}">${PLUS}</button>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function summaryText(n) {
+      const noun = n === 1 ? 'remedy' : 'remedies';
+      const q = state.q.trim();
+      const cat = state.cat !== 'all' ? catLabel(state.cat) : '';
+      if (!q && !cat) return `All ${n} ${noun}`;
+      if (!q) return `${n} ${noun} for ${cat.toLowerCase()}`;
+      if (!n) return `No remedies found for “${q}”` + (cat ? ` in ${cat.toLowerCase()}` : '');
+      return `${n} ${noun} for “${q}”` + (cat ? ` in ${cat.toLowerCase()}` : '');
+    }
+
+    function render() {
+      buildHighlighter();
+      const list = search();
+      title.textContent = summaryText(list.length);
+      grid.innerHTML = list.map(cardHTML).join('');
+      empty.hidden = list.length > 0;
+      if (!list.length) $('#empty-title').textContent = state.q.trim() ? 'We could not find that remedy yet' : 'No remedies in this group yet';
+      syncUrl();
+    }
+
+    function syncUrl() {
+      try {
+        const url = new URL(location.href);
+        state.q.trim() ? url.searchParams.set('q', state.q.trim()) : url.searchParams.delete('q');
+        state.cat !== 'all' ? url.searchParams.set('cat', state.cat) : url.searchParams.delete('cat');
+        history.replaceState(null, '', url);
+      } catch (e) { /* file:// or sandboxed frames may block this; safe to ignore */ }
+    }
+
+    /* ---------------- filters ---------------- */
+    const filters = $('#filters');
+    filters.innerHTML = CATEGORIES.map(c =>
+      `<button class="chip" type="button" data-cat="${c.id}" aria-pressed="${c.id === state.cat}">${esc(c.label)}</button>`).join('');
+    filters.addEventListener('click', e => {
+      const btn = e.target.closest('.chip');
+      if (!btn) return;
+      state.cat = btn.dataset.cat;
+      filters.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(c === btn)));
+      render();
+    });
+
+    /* ---------------- search input ---------------- */
+    let timer;
+    input.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { state.q = input.value; render(); }, 140);
+    });
+    $('#search-form').addEventListener('submit', e => {
+      e.preventDefault();
+      clearTimeout(timer);
+      state.q = input.value;
+      render();
+      $('#results').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    });
+    function runQuery(q) {
+      input.value = q;
+      state.q = q;
+      state.cat = 'all';
+      filters.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.cat === 'all')));
+      render();
+      $('#results').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    }
+    document.addEventListener('click', e => {
+      const b = e.target.closest('.try button');
+      if (b) runQuery(b.dataset.q);
+    });
+
+    /* ---------------- dialog ---------------- */
+    const dlg = $('#remedy-dialog');
+    const CLOSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+
+    function videoHTML(url) {
+      const u = safeUrl(url);
+      if (!u) return '';
+      const yt = u.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/);
+      if (yt) return `<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/${yt[1]}" title="Video: how to prepare this remedy" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`;
+      if (/\.(mp4|webm|ogg)(\?|$)/i.test(u)) return `<div class="video"><video controls preload="none" src="${esc(u)}"></video></div>`;
+      return `<a class="btn btn-green" href="${esc(u)}" target="_blank" rel="noopener">Watch the video</a>`;
+    }
+
+    function openRemedy(id) {
+      const r = REMEDIES.find(x => String(x.id) === String(id));
+      if (!r) return;
+      const li = arr => (arr || []).map(x => `<li>${esc(x)}</li>`).join('');
+      dlg.innerHTML = `
+        <div class="modal-head on-green">
+          <span class="orb">${icon(r.category)}</span>
+          <h2 id="dialog-title">${esc(r.name)}</h2>
+          <p>${esc(r.issue)}</p>
+          <button class="modal-close" type="button" aria-label="Close">${CLOSE}</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-lead">${esc(r.summary)}</p>
+          <div class="modal-cols">
+            <section><h3>What you need</h3><ul class="dot-list">${li(r.ingredients)}</ul></section>
+            <section><h3>Why people use it</h3><ul class="dot-list">${li(r.benefits)}</ul></section>
+          </div>
+          <section><h3>How to make it</h3><ol class="steps">${li(r.steps)}</ol></section>
+          ${r.caution ? `<p class="caution"><strong>Before you try it</strong>${esc(r.caution)}</p>` : ''}
+          ${videoHTML(r.video)}
+          <div class="modal-foot">
+            ${r.verified ? badge : '<span></span>'}
+            <span>Traditional use only. Not a substitute for medical advice.</span>
+          </div>
+        </div>`;
+      document.body.classList.add('modal-open');
+      if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+      dlg.querySelector('.modal-body').scrollTop = 0;
+    }
+
+    grid.addEventListener('click', e => {
+      const b = e.target.closest('.open');
+      if (b) openRemedy(b.dataset.id);
+    });
+    dlg.addEventListener('click', e => {
+      if (e.target === dlg || e.target.closest('.modal-close')) dlg.close();
+    });
+    dlg.addEventListener('close', () => {
+      document.body.classList.remove('modal-open');
+      dlg.innerHTML = '';   // also stops any playing video
+    });
+
+    /* ---------------- chrome: menu, back to top, year ---------------- */
+    const toggle = $('.nav-toggle');
+    const menu = $('#site-menu');
+    toggle.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+
+    const toTop = $('#to-top');
+    const onScroll = () => toTop.classList.toggle('show', window.scrollY > 400);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }));
+    onScroll();
+
+    $('#year').textContent = new Date().getFullYear();
+
+    /* ---------------- start (supports cures.html?q=sinus&cat=cold) ---------------- */
+    const params = new URLSearchParams(location.search);
+    state.q = params.get('q') || '';
+    const cat = params.get('cat');
+    if (cat && CATEGORIES.some(c => c.id === cat)) state.cat = cat;
+    input.value = state.q;
+    filters.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.cat === state.cat)));
+    render();
+  })();
+  </script>
 </body>
 </html>

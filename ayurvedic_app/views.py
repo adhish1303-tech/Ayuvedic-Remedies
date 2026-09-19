@@ -252,3 +252,14 @@ def sender_email(request):
             return redirect('contactpage')
         except Exception as e:
             return HttpResponse(f"Failed to send email : {e}")
+
+def search_remedies(request):
+    query = request.GET.get('search_remedy')
+
+    if query:
+        remedy = remedies.objects.filter(Issues__icontains = query)
+
+    else:
+        remedy = remedies.objects.none()
+
+    return render(request, "", {remedy : remedy})
