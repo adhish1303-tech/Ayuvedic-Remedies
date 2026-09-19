@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="/static/css/slick.css">
     <link rel="stylesheet" href="/static/css/nice-select.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="style.css">
 </head>
 <body>
     <!-- ? Preloader Start -->
@@ -44,7 +45,7 @@
             <div class="main-header header-sticky">
                 <div class="container-fluid">
                     <div class="row align-items-center">
-                        <!-- Logo -->
+                        <!-- Logo -->  
                         <div class="col-xl-2 col-lg-2 col-md-1">
                             <div class="logo">
                                 <a href="index.html"><img src="/static/img/logo/logo.png" alt=""></a>
@@ -55,19 +56,19 @@
                                 <!-- Main-menu -->
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav> 
-                                        <ul id="navigation">
+                                        {% comment %} <ul id="navigation">
                                             <li><a href="{% url 'indexpage' %}">Home</a></li>
                                             <li><a href="{% url 'aboutpage' %}">About</a></li>
-                                            <li><a href="{% url 'servicespage' %}">Cures</a></li>
+                                            <li><a href="{% url 'servicespage' %}">Cures</a></li> {% endcomment %}
                                             {% comment %} <li><a href="{% url 'blogpage' %}">Blog</a>
                                                 <ul class="submenu">
                                                     <li><a href="blog.html">Blog</a></li>
                                                     <li><a href="blog_details.html">Blog Details</a></li>
                                                     <li><a href="elements.html">Element</a></li>
                                                 </ul> {% endcomment %}
-                                            </li>
+                                            {% comment %} </li>
                                             <li><a href="{% url 'contactpage' %}">Contact</a></li>
-                                        </ul>
+                                        </ul> {% endcomment %}
                                     </nav>
                                 </div>
                                 <div class="header-right-btn f-right d-none d-lg-block ml-15">
@@ -86,9 +87,20 @@
                 </div>
             </div>
         </div>
+        
         <!-- Header End -->
     </header>
     <main>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="search-container">
+                        <input type="text" class="form-control search-input" placeholder="Search...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--? Slider Area Start-->
         <div class="slider-area slider-area2">
             <div class="slider-active dot-style">

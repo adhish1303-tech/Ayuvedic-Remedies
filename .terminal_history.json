@@ -76,7 +76,52 @@
       "command": "git commit -m \"Connected the contact page with the backend\"",
       "timestamp": 1789756125502,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1789756137043,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Connected the contact page with the backend\"",
+      "timestamp": 1789756140713,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1789756149233,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "C:\\Python313\\python.exe manage.py runserver",
+      "timestamp": 1789767132720,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_3bejqj.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_3bejqj.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1789801444418,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_rcqet.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_rcqet.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1789801444419,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git status",
+      "timestamp": 1789801459698,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_z3hdxk.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_z3hdxk.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1789801465516,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git status",
+      "timestamp": 1789805326727,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1789756125502
+  "lastUpdated": 1789805326727
 }
