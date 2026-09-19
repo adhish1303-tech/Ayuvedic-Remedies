@@ -14,8 +14,8 @@ def indexpage(request):
 def aboutpage(request):
     return render(request, "about.html")
 
-def servicespage(request):
-    return render(request, "services.html")
+def remediespage(request):
+    return render(request, "remedies.html")
 
 def blogpage(request):
     return render(request, "blog.html")

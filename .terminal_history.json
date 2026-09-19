@@ -156,7 +156,27 @@
       "command": "git status",
       "timestamp": 1789827572622,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1789827578261,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Made changes in the cures section(services.html page), changed the whole page layout and the structre of the servies.html and started working on the search bar\"",
+      "timestamp": 1789827667427,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1789827678548,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git status",
+      "timestamp": 1789829579256,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1789827572622
+  "lastUpdated": 1789829579256
 }

@@ -7,7 +7,6 @@
   <title>Cures | Health couch</title>
   <meta name="description" content="Search traditional Ayurvedic home remedies by ailment or ingredient. Every remedy is reviewed by the Health couch team.">
 
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -339,8 +338,18 @@
     }
     .caution { padding: 20px 24px; background: var(--mint); border-left: 5px solid var(--green); border-radius: 0 0 0 28px; color: var(--green-ink); font-size: .95rem; }
     .caution strong { display: block; margin-bottom: 2px; font-weight: 600; }
-    .video { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 0 0 0 40px; background: #000; }
-    .video iframe, .video video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .media-box { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 0 0 0 40px; background: var(--mint); }
+    .media-box.is-video { background: #000; }
+    .media-box img { width: 100%; height: 100%; object-fit: cover; }
+    .media-box iframe, .media-box video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .media-empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; height: 100%; padding: 16px; text-align: center;
+      border: 2px dashed var(--green); border-radius: inherit;
+      color: var(--green-deep); font-size: .95rem; background: var(--mint);
+    }
+    .media-empty svg { width: 40px; height: 40px; stroke: var(--green); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .video-link { margin-top: 14px; }
     .modal-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding-top: 22px; border-top: 1px solid var(--line); font-size: .85rem; }
 
     /* ---------- Responsive ---------- */
@@ -396,7 +405,7 @@
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="cures.html" aria-current="page">Cures</a></li>
+            <li><a href="cures.html" aria-current="page">Remedies</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
         </nav>
@@ -413,7 +422,7 @@
     <section class="hero" aria-labelledby="page-title">
       <div class="container">
         <div class="hero-copy">
-          <h1 id="page-title">Cures</h1>
+          <h1 id="page-title">Remedies</h1>
           <p class="hero-lead">Search traditional home remedies by ailment or ingredient.</p>
 
           <form class="search" id="search-form" role="search" autocomplete="off">
@@ -521,7 +530,7 @@
         <nav class="footer-nav" aria-label="Footer">
           <a href="index.html">Home</a>
           <a href="about.html">About</a>
-          <a href="cures.html">Cures</a>
+          <a href="cures.html">Remedies</a>
           <a href="contact.html">Contact</a>
         </nav>
       </div>
@@ -544,7 +553,8 @@
 
     /* ------------------------------------------------------------------
        Sample data. Replace with your database records (see note at top).
-       image and video are optional; leave them empty to hide them.
+       image and video are optional; leave them empty and the remedy window
+       shows an empty Photo / Video box instead.
     ------------------------------------------------------------------ */
     const SAMPLE_REMEDIES = [
       {
@@ -864,13 +874,27 @@
     const dlg = $('#remedy-dialog');
     const CLOSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
 
+    const IMG_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>';
+    const VID_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="m10 9 5 3-5 3z"/></svg>';
+    const emptyBox = (ic, text) => `<div class="media-empty">${ic}<span>${text}</span></div>`;
+
+    /* Photo section: the image from the database, or an empty box */
+    function photoHTML(r) {
+      const u = safeUrl(r.image);
+      return `<div class="media-box" data-kind="photo">${u
+        ? `<img src="${esc(u)}" alt="Photo of ${esc(r.name)}" loading="lazy">`
+        : emptyBox(IMG_ICON, 'No photo added for this remedy yet')}</div>`;
+    }
+
+    /* Video section: YouTube link, uploaded video file, or an empty box */
     function videoHTML(url) {
       const u = safeUrl(url);
-      if (!u) return '';
+      if (!u) return `<div class="media-box" data-kind="video">${emptyBox(VID_ICON, 'No video added for this remedy yet')}</div>`;
       const yt = u.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/);
-      if (yt) return `<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/${yt[1]}" title="Video: how to prepare this remedy" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`;
-      if (/\.(mp4|webm|ogg)(\?|$)/i.test(u)) return `<div class="video"><video controls preload="none" src="${esc(u)}"></video></div>`;
-      return `<a class="btn btn-green" href="${esc(u)}" target="_blank" rel="noopener">Watch the video</a>`;
+      if (yt) return `<div class="media-box is-video" data-kind="video"><iframe src="https://www.youtube-nocookie.com/embed/${yt[1]}" title="Video: how to prepare this remedy" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>`;
+      if (/\.(mp4|webm|ogg|mov)(\?|$)/i.test(u)) return `<div class="media-box is-video" data-kind="video"><video controls preload="metadata" playsinline src="${esc(u)}"></video></div>`;
+      return `<div class="media-box" data-kind="video">${emptyBox(VID_ICON, 'This video opens on another site')}</div>
+              <a class="btn btn-green video-link" href="${esc(u)}" target="_blank" rel="noopener">Watch the video</a>`;
     }
 
     function openRemedy(id) {
@@ -886,13 +910,14 @@
         </div>
         <div class="modal-body">
           <p class="modal-lead">${esc(r.summary)}</p>
+          <section aria-label="Photo"><h3>Photo</h3>${photoHTML(r)}</section>
           <div class="modal-cols">
             <section><h3>What you need</h3><ul class="dot-list">${li(r.ingredients)}</ul></section>
             <section><h3>Why people use it</h3><ul class="dot-list">${li(r.benefits)}</ul></section>
           </div>
           <section><h3>How to make it</h3><ol class="steps">${li(r.steps)}</ol></section>
           ${r.caution ? `<p class="caution"><strong>Before you try it</strong>${esc(r.caution)}</p>` : ''}
-          ${videoHTML(r.video)}
+          <section aria-label="Video"><h3>Video</h3>${videoHTML(r.video)}</section>
           <div class="modal-foot">
             ${r.verified ? badge : '<span></span>'}
             <span>Traditional use only. Not a substitute for medical advice.</span>
@@ -901,6 +926,11 @@
       document.body.classList.add('modal-open');
       if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
       dlg.querySelector('.modal-body').scrollTop = 0;
+      /* A broken photo URL falls back to the empty box instead of a broken image */
+      const photo = dlg.querySelector('[data-kind="photo"] img');
+      if (photo) photo.addEventListener('error', () => {
+        photo.parentElement.innerHTML = emptyBox(IMG_ICON, 'This photo could not be loaded');
+      });
     }
 
     grid.addEventListener('click', e => {

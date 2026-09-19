@@ -58,7 +58,7 @@
                                         <ul id="navigation">
                                             <li><a href="{% url 'indexpage' %}">Home</a></li>
                                             <li><a href="{% url 'aboutpage' %}">About</a></li>
-                                            <li><a href="{% url 'servicespage' %}">Cures</a></li>
+                                            <li><a href="{% url 'remediespage' %}">Remedies</a></li>
                                             {% comment %} <li><a href="{% url 'blogpage' %}">Blog</a>
                                                 <ul class="submenu">
                                                     <li><a href="blog.html">Blog</a></li>
@@ -107,7 +107,7 @@
                                 <div class="hero__caption_home">
                                     <h1 data-animation="fadeInUp" data-delay=".3s">Ancient Wisdom for Modern Healing </h1>
                                     <p data-animation="fadeInUp" data-delay=".6s">Discover verified, natural Ayurvedic home remedies for everyday ailments — straight from nature to your kitchen</p>
-                                    <a href="services.html" class="btn" data-animation="fadeInLeft" data-delay=".3s">Explore Remedies</a>
+                                    <a href="{% url 'remediespage' %}" class="btn" data-animation="fadeInLeft" data-delay=".3s">Explore Remedies</a>
                                 </div>
                             </div>
                         </div>
@@ -397,7 +397,7 @@
                                                 <ul>
                                                     <li><a href="{% url 'indexpage' %}">Home</a></li>
                                                     <li><a href="{% url 'aboutpage' %}">About</a></li>
-                                                    <li><a href="{% url 'servicespage' %}">Cures</a></li>
+                                                    <li><a href="{% url 'remediespage' %}">Remedies</a></li>
                                                     {% comment %} <li><a href="{% url 'blogpage' %}">Blog</a></li> {% endcomment %}
                                                     <li><a href="{% url 'contactpage' %}">Contact</a></li>
                                                 </ul>
