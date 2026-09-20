@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponse
+from django.shortcuts import render
+
 # Create your views here.
 
 
@@ -254,12 +256,17 @@ def sender_email(request):
             return HttpResponse(f"Failed to send email : {e}")
 
 def search_remedies(request):
-    query = request.GET.get('search_remedy')
-
+    query = request.GET.get('q', '').strip()
+    
     if query:
-        remedy = remedies.objects.filter(Issues__icontains = query)
-
+        # Filter your database queryset based on search term
+        remedies = remedies.objects.filter(Issues__icontains=query)  # or issue__icontains=query
     else:
-        remedy = remedies.objects.none()
+        remedies = remedies.objects.all()
 
-    return render(request, "", {remedy : remedy})
+    context = {
+        'remedies': remedies,
+        'query': query,
+    }
+    # Do NOT redirect; render directly so context data is available
+    return render(request, 'remedies.html', context)

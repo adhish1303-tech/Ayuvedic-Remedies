@@ -425,9 +425,9 @@
           <h1 id="page-title">Remedies</h1>
           <p class="hero-lead">Search traditional home remedies by ailment or ingredient.</p>
 
-          <form class="search" id="search-form" role="search" autocomplete="off">
+          <form class="search" id="search-form" role="search" autocomplete="off" action = "{% url 'remediespage' %}" method="get">
             <label class="visually-hidden" for="q">Search remedies</label>
-            <input id="q" name="q" type="search" placeholder="Try sinus, indigestion or ginger" enterkeyhint="search">
+            <input id="q" name="search_remedy" type="search" placeholder="Try sinus, indigestion or ginger" enterkeyhint="search">
             <button type="submit">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
               <span>Search</span>
@@ -476,6 +476,51 @@
           <div class="orb" aria-hidden="true">
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           </div>
+          <form action = "{% url 'search_remedies' %}" method = "get">
+          <div class="remedy-grid">
+          {% for r in remedies %}
+            <article class="remedy-card">
+              <!-- Card Head: using r.img instead of r.image -->
+              <div class="remedy-card__head on-green{% if r.img %} has-image{% endif %}"
+                  {% if r.img %}style="--img:url('{{ r.img.url }}')"{% endif %}>
+                <!-- Display uploaded date or author name in place of category -->
+                <span class="orb">{{ r.uploaded_at|date:"M d" }}</span>
+                <h3 class="remedy-card__name">{{ r.Name }}</h3>
+              </div>
+
+              <div class="remedy-card__body">
+                <!-- Issues mapped to r.Issues -->
+                <p class="issue">{{ r.Issues }}</p>
+
+                <!-- Summary mapped to r.Solution (truncated for clean card layout) -->
+                <p class="remedy-card__summary">{{ r.Solution|truncatewords:20 }}</p>
+
+                <!-- Benefits breakdown rendered as pills (split by commas) -->
+                <ul class="pills" aria-label="Key benefits">
+                  {% for benefit in r.Benefits.split|slice:":4" %}
+                    <li>{{ benefit }}</li>
+                  {% empty %}
+                    <li>{{ r.Benefits|truncatewords:6 }}</li>
+                  {% endfor %}
+                </ul> 
+              </div>
+        <div class="remedy-card__foot">
+          <!-- Shows author/contributor since verified field isn't in model -->
+          <small class="author-tag">By {{ r.user_name }}</small>
+
+          <!-- Button references r.id or r.pk and r.Name -->
+          <button class="open" 
+                  type="button" 
+                  data-id="{{ r.id }}" 
+                  aria-label="View how to make {{ r.Name }}">+</button>
+        </div>
+      </div>
+    </article>
+  {% empty %}
+    <p class="no-results">No remedies found matching your search.</p>
+  {% endfor %}
+</div>
+</form>
           <h3 id="empty-title">No remedies found</h3>
           <p>Check the spelling, try a single word like “cough”, or search by an ingredient such as “ginger”.</p>
           <div class="try" id="try-empty">
