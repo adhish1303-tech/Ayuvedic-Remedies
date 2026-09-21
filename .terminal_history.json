@@ -296,7 +296,27 @@
       "command": "git push",
       "timestamp": 1789949561636,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1789950196090,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Fixed the search bar issue\"",
+      "timestamp": 1789950240722,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1789950250958,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "C:\\Python313\\python.exe manage.py runserver",
+      "timestamp": 1789950567898,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1789949561636
+  "lastUpdated": 1789950567898
 }

@@ -4,8 +4,8 @@ from ayurvedic_app.models import Register, admin, remedies
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.core.mail import EmailMultiAlternatives
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 
@@ -273,3 +273,18 @@ def search_remedies(request):
     }
     # Do NOT redirect; render directly so context data is available
     return render(request, 'remedies.html', context)
+
+def get_remedy_detail(request, id):
+    r = get_object_or_404(remedies, id=id)
+    
+    data = {
+        'id': r.id,
+        'name': r.Name,
+        'issue': r.Issues,
+        'solution': r.Solution,
+        'benefits': [b.strip() for b in r.Benefits.splitlines() if b.strip()],
+        'image': r.img.url if r.img else '',
+        'video': r.video.url if r.video else '',
+        'user_name': r.user_name,
+    }
+    return JsonResponse(data)

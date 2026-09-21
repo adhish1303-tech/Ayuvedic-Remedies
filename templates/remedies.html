@@ -477,45 +477,101 @@
 
     <!-- Django renders the cards here -->
     <div class="grid" id="grid">
-      {% for r in remedies %}
-        <article class="remedy-card">
-          <div class="remedy-card__head on-green{% if r.img %} has-image{% endif %}"
-               {% if r.img %}style="--img:url('{{ r.img.url }}')"{% endif %}>
-            <span class="orb">🌿</span>
-            <h3 class="remedy-card__name">{{ r.Name }}</h3>
-          </div>
+  {% for r in remedies %}
+    <article class="remedy-card">
+      <div class="remedy-card__head on-green{% if r.img %} has-image{% endif %}"
+           {% if r.img %}style="--img:url('{{ r.img.url }}')"{% endif %}>
+        <span class="orb">🌿</span>
+        <h3 class="remedy-card__name">{{ r.Name }}</h3>
+      </div>
 
-          <div class="remedy-card__body">
-            <p class="issue">{{ r.Issues }}</p>
-            <p class="remedy-card__summary">{{ r.Solution|truncatewords:20 }}</p>
+      <div class="remedy-card__body">
+        <p class="issue">{{ r.Issues }}</p>
+        <p class="remedy-card__summary">{{ r.Solution|truncatewords:20 }}</p>
 
-            <ul class="pills" aria-label="Key benefits">
-              {% for b in r.Benefits.splitlines|slice:":4" %}
-                <li>{{ b }}</li>
-              {% empty %}
-                <li>{{ r.Benefits|truncatewords:6 }}</li>
-              {% endfor %}
-            </ul>
+        <ul class="pills" aria-label="Key benefits">
+          {% for b in r.Benefits.splitlines|slice:":4" %}
+            <li>{{ b }}</li>
+          {% empty %}
+            <li>{{ r.Benefits|truncatewords:6 }}</li>
+          {% endfor %}
+        </ul>
 
-            <div class="remedy-card__foot">
-              <small class="author-tag">By {{ r.user_name }}</small>
-              <button class="open" 
-                      type="button" 
-                      data-id="{{ r.id }}" 
-                      aria-label="View how to make {{ r.Name }}">+</button>
-            </div>
-          </div>
-        </article>
-      {% empty %}
-        <div class="empty" id="empty">
-          <div class="orb" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          </div>
-          <h3 id="empty-title">No remedies found</h3>
-          <p>Check the spelling, try a single word like “cough”, or search by an ingredient such as “ginger”.</p>
+        <div class="remedy-card__foot">
+          <small class="author-tag">By {{ r.user_name }}</small>
+          
+          <!-- Note the class and data-id -->
+          <button class="open open-remedy-btn" 
+                  type="button" 
+                  data-id="{{ r.id }}" 
+                  aria-label="View how to make {{ r.Name }}">+</button>
         </div>
-      {% endfor %}
+      </div>
+
+      <!-- Hidden template containing full details for this exact remedy -->
+      <template id="remedy-tpl-{{ r.id }}">
+        <div class="modal-head on-green">
+          <span class="orb">🌿</span>
+          <h2 id="dialog-title">{{ r.Name }}</h2>
+          <p>{{ r.Issues }}</p>
+          <button class="modal-close" type="button" aria-label="Close">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          {% if r.img %}
+            <section aria-label="Photo">
+              <h3>Photo</h3>
+              <div class="media-box">
+                <img src="{{ r.img.url }}" alt="{{ r.Name }}">
+              </div>
+            </section>
+          {% endif %}
+
+          <section>
+            <h3>How to Prepare & Use</h3>
+            <p class="modal-lead" style="white-space: pre-line; margin-top: 10px;">{{ r.Solution }}</p>
+          </section>
+
+          {% if r.Benefits %}
+            <section>
+              <h3>Key Benefits</h3>
+              <ul class="dot-list" style="margin-top: 10px;">
+                {% for b in r.Benefits.splitlines %}
+                  {% if b.strip %}
+                    <li>{{ b }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </section>
+          {% endif %}
+
+          {% if r.video %}
+            <section aria-label="Video">
+              <h3>Video Guide</h3>
+              <div class="media-box is-video">
+                <video controls playsinline src="{{ r.video.url }}"></video>
+              </div>
+            </section>
+          {% endif %}
+
+          <div class="modal-foot">
+            <span>Contributed by: <strong>{{ r.user_name }}</strong></span>
+            <span>Traditional use only. Not a substitute for medical advice.</span>
+          </div>
+        </div>
+      </template>
+    </article>
+  {% empty %}
+    <div class="empty" id="empty">
+      <div class="orb" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </div>
+      <h3 id="empty-title">No remedies found</h3>
+      <p>Check the spelling or try searching for another ailment.</p>
     </div>
+  {% endfor %}
+</div>
 
     <p class="disclaimer">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22c5.5 0 9-4 9-9 0-3-1-6-3-8.5-1.2 1.4-3 2.3-5 2.5C11 4.5 10 3 9 2 5 5 3 8.5 3 13c0 5 3.5 9 9 9Z"/><path d="M12 22v-8"/></svg>
@@ -578,7 +634,7 @@
 
   {% comment %} <!-- Django: {{ remedies|json_script:"remedy-data" }} --> {% endcomment %}
 
-  <script>
+  {% comment %} <script>
   (() => {
     'use strict';
 
@@ -928,46 +984,106 @@
               <a class="btn btn-green video-link" href="${esc(u)}" target="_blank" rel="noopener">Watch the video</a>`;
     }
 
-    function openRemedy(id) {
-      const r = REMEDIES.find(x => String(x.id) === String(id));
-      if (!r) return;
-      const li = arr => (arr || []).map(x => `<li>${esc(x)}</li>`).join('');
-      dlg.innerHTML = `
-        <div class="modal-head on-green">
-          <span class="orb">${icon(r.category)}</span>
-          <h2 id="dialog-title">${esc(r.name)}</h2>
-          <p>${esc(r.issue)}</p>
-          <button class="modal-close" type="button" aria-label="Close">${CLOSE}</button>
-        </div>
-        <div class="modal-body">
-          <p class="modal-lead">${esc(r.summary)}</p>
-          <section aria-label="Photo"><h3>Photo</h3>${photoHTML(r)}</section>
-          <div class="modal-cols">
-            <section><h3>What you need</h3><ul class="dot-list">${li(r.ingredients)}</ul></section>
-            <section><h3>Why people use it</h3><ul class="dot-list">${li(r.benefits)}</ul></section>
-          </div>
-          <section><h3>How to make it</h3><ol class="steps">${li(r.steps)}</ol></section>
-          ${r.caution ? `<p class="caution"><strong>Before you try it</strong>${esc(r.caution)}</p>` : ''}
-          <section aria-label="Video"><h3>Video</h3>${videoHTML(r.video)}</section>
-          <div class="modal-foot">
-            ${r.verified ? badge : '<span></span>'}
-            <span>Traditional use only. Not a substitute for medical advice.</span>
-          </div>
-        </div>`;
-      document.body.classList.add('modal-open');
-      if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
-      dlg.querySelector('.modal-body').scrollTop = 0;
-      /* A broken photo URL falls back to the empty box instead of a broken image */
-      const photo = dlg.querySelector('[data-kind="photo"] img');
-      if (photo) photo.addEventListener('error', () => {
-        photo.parentElement.innerHTML = emptyBox(IMG_ICON, 'This photo could not be loaded');
-      });
-    }
+  async function openRemedy(id) {
+  try {
+    // 1. Fetch the exact remedy details from your Django database
+    const response = await fetch(`/api/remedy/${id}/`);
+    if (!response.ok) throw new Error('Remedy not found');
+    const r = await response.json();
 
-    grid.addEventListener('click', e => {
-      const b = e.target.closest('.open');
-      if (b) openRemedy(b.dataset.id);
-    });
+    const li = arr => (arr || []).map(x => `<li>${esc(x)}</li>`).join('');
+
+    // 2. Render into dialog
+    dlg.innerHTML = `
+      <div class="modal-head on-green">
+        <span class="orb">🌿</span>
+        <h2 id="dialog-title">${esc(r.name)}</h2>
+        <p>${esc(r.issue)}</p>
+        <button class="modal-close" type="button" aria-label="Close">${CLOSE}</button>
+      </div>
+      <div class="modal-body">
+        <section aria-label="Photo">
+          <h3>Photo</h3>
+          ${photoHTML({ image: r.image, name: r.name })}
+        </section>
+        
+        <div class="modal-cols">
+          <section>
+            <h3>Key Benefits</h3>
+            <ul class="dot-list">${li(r.benefits)}</ul>
+          </section>
+        </div>
+
+        <section>
+          <h3>How to Prepare & Use (Solution)</h3>
+          <p class="modal-lead" style="white-space: pre-line;">${esc(r.solution)}</p>
+        </section>
+
+        ${r.video ? `
+        <section aria-label="Video">
+          <h3>Video Demonstration</h3>
+          ${videoHTML(r.video)}
+        </section>` : ''}
+
+        <div class="modal-foot">
+          <span>Uploaded by: <strong>${esc(r.user_name)}</strong></span>
+          <span>Traditional use only. Not a substitute for medical advice.</span>
+        </div>
+      </div>`;
+
+    document.body.classList.add('modal-open');
+    if (typeof dlg.showModal === 'function') {
+      dlg.showModal();
+    } else {
+      dlg.setAttribute('open', '');
+    }
+    dlg.querySelector('.modal-body').scrollTop = 0;
+  } catch (err) {
+    console.error('Failed to load remedy details:', err);
+  }
+}
+
+    const dlg = document.getElementById('remedy-dialog');
+
+  // Handle clicking '+' on any remedy card
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.open-remedy-btn');
+    if (!btn) return;
+
+    const id = btn.dataset.id;
+    const tpl = document.getElementById(`remedy-tpl-${id}`);
+    
+    if (tpl && dlg) {
+      // Inject the template HTML directly into the dialog
+      dlg.innerHTML = tpl.innerHTML;
+      document.body.classList.add('modal-open');
+      
+      if (typeof dlg.showModal === 'function') {
+        dlg.showModal();
+      } else {
+        dlg.setAttribute('open', '');
+      }
+      
+      const body = dlg.querySelector('.modal-body');
+      if (body) body.scrollTop = 0;
+    }
+  });
+
+  // Handle closing modal
+  dlg.addEventListener('click', e => {
+    if (e.target === dlg || e.target.closest('.modal-close')) {
+      if (typeof dlg.close === 'function') {
+        dlg.close();
+      } else {
+        dlg.removeAttribute('open');
+      }
+    }
+  });
+
+  dlg.addEventListener('close', () => {
+    document.body.classList.remove('modal-open');
+    dlg.innerHTML = ''; // Stops any video playback
+  });
     dlg.addEventListener('click', e => {
       if (e.target === dlg || e.target.closest('.modal-close')) dlg.close();
     });
@@ -1002,6 +1118,92 @@
     filters.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.cat === state.cat)));
     render();
   })();
-  </script>
+  </script> {% endcomment %}
+<script>
+(() => {
+  'use strict';
+
+  /* ---------------- Modal dialog handling ---------------- */
+  const dlg = document.getElementById('remedy-dialog');
+
+  // Handle clicking '+' on any remedy card rendered by Django
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.open-remedy-btn');
+    if (!btn) return;
+
+    const id = btn.dataset.id;
+    const tpl = document.getElementById(`remedy-tpl-${id}`);
+
+    if (tpl && dlg) {
+      // Inject the hidden template HTML into the dialog
+      dlg.innerHTML = tpl.innerHTML;
+      document.body.classList.add('modal-open');
+
+      if (typeof dlg.showModal === 'function') {
+        dlg.showModal();
+      } else {
+        dlg.setAttribute('open', '');
+      }
+
+      const body = dlg.querySelector('.modal-body');
+      if (body) body.scrollTop = 0;
+    }
+  });
+
+  // Handle closing modal
+  if (dlg) {
+    dlg.addEventListener('click', e => {
+      if (e.target === dlg || e.target.closest('.modal-close')) {
+        if (typeof dlg.close === 'function') {
+          dlg.close();
+        } else {
+          dlg.removeAttribute('open');
+        }
+      }
+    });
+
+    dlg.addEventListener('close', () => {
+      document.body.classList.remove('modal-open');
+      dlg.innerHTML = ''; // Stops any playing video
+    });
+  }
+
+  /* ---------------- Popular tags auto-search ---------------- */
+  const searchInput = document.getElementById('q');
+  const searchForm = document.getElementById('search-form');
+
+  document.addEventListener('click', e => {
+    const tagBtn = e.target.closest('.try button');
+    if (tagBtn && searchInput && searchForm) {
+      searchInput.value = tagBtn.dataset.q;
+      searchForm.submit(); // Automatically submits search for that keyword
+    }
+  });
+
+  /* ---------------- Chrome: Mobile menu, back-to-top, year ---------------- */
+  const toggle = document.querySelector('.nav-toggle');
+  const menu = document.getElementById('site-menu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+  }
+
+  const toTop = document.getElementById('to-top');
+  if (toTop) {
+    const onScroll = () => toTop.classList.toggle('show', window.scrollY > 400);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    onScroll();
+  }
+
+  const yearEl = document.getElementById('year');
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
+})();
+</script>
 </body>
 </html>
