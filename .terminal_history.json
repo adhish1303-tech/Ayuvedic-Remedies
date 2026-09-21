@@ -236,7 +236,52 @@
       "command": "git status",
       "timestamp": 1789914705519,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1789914709562,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Minor changes done\"",
+      "timestamp": 1789914776992,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1789914786646,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "C:\\Python313\\python.exe manage.py runserver",
+      "timestamp": 1789922200214,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_vtab3f.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_vtab3f.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1789948253677,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_xf6xgp.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_xf6xgp.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1789948253685,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_q2joma.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_q2joma.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1789948302977,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "C:\\Python313\\python.exe manage.py runserver",
+      "timestamp": 1789948896646,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git status",
+      "timestamp": 1789949510997,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1789914705519
+  "lastUpdated": 1789949510997
 }

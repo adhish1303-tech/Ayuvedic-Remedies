@@ -425,7 +425,7 @@
           <h1 id="page-title">Remedies</h1>
           <p class="hero-lead">Search traditional home remedies by ailment or ingredient.</p>
 
-          <form class="search" id="search-form" role="search" autocomplete="off" action = "{% url 'remediespage' %}" method="get">
+          <form class="search" id="search-form" role="search" autocomplete="off" action = "{% url 'search_remedies' %}" method="get">
             <label class="visually-hidden" for="q">Search remedies</label>
             <input id="q" name="search_remedy" type="search" placeholder="Try sinus, indigestion or ginger" enterkeyhint="search">
             <button type="submit">

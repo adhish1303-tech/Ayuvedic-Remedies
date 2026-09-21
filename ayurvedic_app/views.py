@@ -256,16 +256,19 @@ def sender_email(request):
             return HttpResponse(f"Failed to send email : {e}")
 
 def search_remedies(request):
-    query = request.GET.get('q', '').strip()
+    query = request.GET.get('search_remedy', '').strip()
     
     if query:
-        # Filter your database queryset based on search term
-        remedies = remedies.objects.filter(Issues__icontains=query)  # or issue__icontains=query
+        # Search by both Name and Issues
+        from django.db.models import Q
+        remedy = remedies.objects.filter(
+            Q(Name__icontains=query) | Q(Issues__icontains=query)
+        )  # or issue__icontains=query
     else:
-        remedies = remedies.objects.all()
+        remedy = remedies.objects.all()
 
     context = {
-        'remedies': remedies,
+        'remedies': remedy,
         'query': query,
     }
     # Do NOT redirect; render directly so context data is available
