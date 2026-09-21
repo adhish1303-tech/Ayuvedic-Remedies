@@ -281,7 +281,22 @@
       "command": "git status",
       "timestamp": 1789949510997,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1789949521542,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Tried fixing search bar functionality\"",
+      "timestamp": 1789949547842,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1789949561636,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1789949510997
+  "lastUpdated": 1789949561636
 }

@@ -464,79 +464,65 @@
 
     <!-- ================= Results ================= -->
     <section class="results" id="results" aria-labelledby="results-title">
-      <div class="container">
-        <div class="results-bar">
-          <h2 class="results-title" id="results-title" aria-live="polite" aria-atomic="true"></h2>
-          <div class="filters" id="filters" role="group" aria-label="Filter by type of remedy"></div>
-        </div>
+  <div class="container">
+    <div class="results-bar">
+      <h2 class="results-title" id="results-title">
+        {% if query %}
+          Results for "{{ query }}" ({{ remedies|length }})
+        {% else %}
+          All Remedies ({{ remedies|length }})
+        {% endif %}
+      </h2>
+    </div>
 
-        <div class="grid" id="grid"></div>
+    <!-- Django renders the cards here -->
+    <div class="grid" id="grid">
+      {% for r in remedies %}
+        <article class="remedy-card">
+          <div class="remedy-card__head on-green{% if r.img %} has-image{% endif %}"
+               {% if r.img %}style="--img:url('{{ r.img.url }}')"{% endif %}>
+            <span class="orb">🌿</span>
+            <h3 class="remedy-card__name">{{ r.Name }}</h3>
+          </div>
 
-        <div class="empty" id="empty" hidden>
+          <div class="remedy-card__body">
+            <p class="issue">{{ r.Issues }}</p>
+            <p class="remedy-card__summary">{{ r.Solution|truncatewords:20 }}</p>
+
+            <ul class="pills" aria-label="Key benefits">
+              {% for b in r.Benefits.splitlines|slice:":4" %}
+                <li>{{ b }}</li>
+              {% empty %}
+                <li>{{ r.Benefits|truncatewords:6 }}</li>
+              {% endfor %}
+            </ul>
+
+            <div class="remedy-card__foot">
+              <small class="author-tag">By {{ r.user_name }}</small>
+              <button class="open" 
+                      type="button" 
+                      data-id="{{ r.id }}" 
+                      aria-label="View how to make {{ r.Name }}">+</button>
+            </div>
+          </div>
+        </article>
+      {% empty %}
+        <div class="empty" id="empty">
           <div class="orb" aria-hidden="true">
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           </div>
-          <form action = "{% url 'search_remedies' %}" method = "get">
-          <div class="remedy-grid">
-          {% for r in remedies %}
-            <article class="remedy-card">
-              <!-- Card Head: using r.img instead of r.image -->
-              <div class="remedy-card__head on-green{% if r.img %} has-image{% endif %}"
-                  {% if r.img %}style="--img:url('{{ r.img.url }}')"{% endif %}>
-                <!-- Display uploaded date or author name in place of category -->
-                <span class="orb">{{ r.uploaded_at|date:"M d" }}</span>
-                <h3 class="remedy-card__name">{{ r.Name }}</h3>
-              </div>
-
-              <div class="remedy-card__body">
-                <!-- Issues mapped to r.Issues -->
-                <p class="issue">{{ r.Issues }}</p>
-
-                <!-- Summary mapped to r.Solution (truncated for clean card layout) -->
-                <p class="remedy-card__summary">{{ r.Solution|truncatewords:20 }}</p>
-
-                <!-- Benefits breakdown rendered as pills (split by commas) -->
-                <ul class="pills" aria-label="Key benefits">
-                  {% for benefit in r.Benefits.split|slice:":4" %}
-                    <li>{{ benefit }}</li>
-                  {% empty %}
-                    <li>{{ r.Benefits|truncatewords:6 }}</li>
-                  {% endfor %}
-                </ul> 
-              </div>
-        <div class="remedy-card__foot">
-          <!-- Shows author/contributor since verified field isn't in model -->
-          <small class="author-tag">By {{ r.user_name }}</small>
-
-          <!-- Button references r.id or r.pk and r.Name -->
-          <button class="open" 
-                  type="button" 
-                  data-id="{{ r.id }}" 
-                  aria-label="View how to make {{ r.Name }}">+</button>
-        </div>
-      </div>
-    </article>
-  {% empty %}
-    <p class="no-results">No remedies found matching your search.</p>
-  {% endfor %}
-</div>
-</form>
           <h3 id="empty-title">No remedies found</h3>
           <p>Check the spelling, try a single word like “cough”, or search by an ingredient such as “ginger”.</p>
-          <div class="try" id="try-empty">
-            <button type="button" data-q="cough">Cough</button>
-            <button type="button" data-q="acidity">Acidity</button>
-            <button type="button" data-q="turmeric">Turmeric</button>
-          </div>
-          <a class="btn btn-deep" href="#suggest">Know this remedy? Suggest it</a>
         </div>
+      {% endfor %}
+    </div>
 
-        <p class="disclaimer">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22c5.5 0 9-4 9-9 0-3-1-6-3-8.5-1.2 1.4-3 2.3-5 2.5C11 4.5 10 3 9 2 5 5 3 8.5 3 13c0 5 3.5 9 9 9Z"/><path d="M12 22v-8"/></svg>
-          <span>These remedies are shared for general wellness information and reflect traditional use. They are not a substitute for professional medical advice. See a doctor if symptoms last, get worse, or you are pregnant, nursing or taking medication.</span>
-        </p>
-      </div>
-    </section>
+    <p class="disclaimer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22c5.5 0 9-4 9-9 0-3-1-6-3-8.5-1.2 1.4-3 2.3-5 2.5C11 4.5 10 3 9 2 5 5 3 8.5 3 13c0 5 3.5 9 9 9Z"/><path d="M12 22v-8"/></svg>
+      <span>These remedies are shared for general wellness information and reflect traditional use. They are not a substitute for professional medical advice. See a doctor if symptoms last, get worse, or you are pregnant, nursing or taking medication.</span>
+    </p>
+  </div>
+</section>
 
     <!-- ================= Suggest a remedy ================= -->
     <section class="suggest" id="suggest" aria-labelledby="suggest-title">
@@ -590,7 +576,7 @@
   <!-- ================= Remedy details ================= -->
   <dialog id="remedy-dialog" aria-labelledby="dialog-title"></dialog>
 
-  <!-- Django: {{ remedies|json_script:"remedy-data" }} -->
+  {% comment %} <!-- Django: {{ remedies|json_script:"remedy-data" }} --> {% endcomment %}
 
   <script>
   (() => {
@@ -890,7 +876,7 @@
     });
 
     /* ---------------- search input ---------------- */
-    let timer;
+    /*let timer;
     input.addEventListener('input', () => {
       clearTimeout(timer);
       timer = setTimeout(() => { state.q = input.value; render(); }, 140);
@@ -901,7 +887,7 @@
       state.q = input.value;
       render();
       $('#results').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-    });
+    });*/ 
     function runQuery(q) {
       input.value = q;
       state.q = q;
