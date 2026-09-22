@@ -356,7 +356,32 @@
       "command": "git push",
       "timestamp": 1790088976464,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1790089000114,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Connected remedies.html to adminlogin.html\"",
+      "timestamp": 1790089029665,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1790089037436,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git status",
+      "timestamp": 1790090330538,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"minor changes in login.html\"",
+      "timestamp": 1790090372187,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1790088976464
+  "lastUpdated": 1790090372187
 }
