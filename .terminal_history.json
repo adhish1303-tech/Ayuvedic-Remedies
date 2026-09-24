@@ -381,7 +381,52 @@
       "command": "git commit -m \"minor changes in login.html\"",
       "timestamp": 1790090372187,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1790090387867,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"minor changes in login.html\"",
+      "timestamp": 1790090392713,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1790090401643,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "C:\\Python313\\python.exe manage.py runserver",
+      "timestamp": 1790093282229,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_1rm9ro.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_1rm9ro.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1790263636662,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_zvdo3r.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_zvdo3r.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1790263636671,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add requirements.txt",
+      "timestamp": 1790263648816,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Added requirements.txt for deployment\"",
+      "timestamp": 1790263696568,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push origin main",
+      "timestamp": 1790263710916,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1790090372187
+  "lastUpdated": 1790263710916
 }
