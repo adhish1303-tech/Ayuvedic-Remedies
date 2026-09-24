@@ -426,7 +426,22 @@
       "command": "git push origin main",
       "timestamp": 1790263710916,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1790263898725,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Added vercel.json file for deployment\"",
+      "timestamp": 1790263933707,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1790263947208,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1790263710916
+  "lastUpdated": 1790263947208
 }
