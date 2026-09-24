@@ -441,7 +441,37 @@
       "command": "git push",
       "timestamp": 1790263947208,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1790264029098,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Made few changes in the setting.py and wsgi.py for deployment\"",
+      "timestamp": 1790264064358,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1790264073049,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_ptr29p.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_ptr29p.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1790264820073,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "C:\\Python313\\Scripts\\manage.py collectstatic --noinput",
+      "timestamp": 1790264878010,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "C:\\Python313\\python.exe manage.py collectstatic --noinput",
+      "timestamp": 1790264949685,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1790263947208
+  "lastUpdated": 1790264949685
 }
