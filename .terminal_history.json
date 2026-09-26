@@ -471,7 +471,37 @@
       "command": "C:\\Python313\\python.exe manage.py collectstatic --noinput",
       "timestamp": 1790264949685,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1790264983734,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Configured WhiteNoise and static files for Vercel\"",
+      "timestamp": 1790265024154,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push origin main",
+      "timestamp": 1790265049968,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_u37kge.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_u37kge.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1790407248127,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_1wi0un.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_1wi0un.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1790407255997,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git status",
+      "timestamp": 1790408826771,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1790264949685
+  "lastUpdated": 1790408826771
 }
