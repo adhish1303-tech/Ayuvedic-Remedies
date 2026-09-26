@@ -158,20 +158,27 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-# Check if a remote database URL or host is provided (Production/Vercel)
 DB_HOST = os.environ.get('DB_HOST', '127.0.0.1')
 DB_NAME = os.environ.get('DB_NAME', 'ayurveda_db')
 DB_USER = os.environ.get('DB_USER', 'root')
 DB_PASSWORD = os.environ.get('DB_PASSWORD', '')
 DB_PORT = os.environ.get('DB_PORT', '3306')
 
+# TiDB Cloud requires SSL/TLS when connecting remotely
+DB_OPTIONS = {}
+if DB_HOST != '127.0.0.1':
+    DB_OPTIONS = {
+        'ssl': {'ca': ''}
+    }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': DB_NAME,           
-        'USER': DB_USER,           
-        'PASSWORD': DB_PASSWORD,   
-        'HOST': DB_HOST,           
-        'PORT': DB_PORT,          
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
+        'OPTIONS': DB_OPTIONS,
     }
 }

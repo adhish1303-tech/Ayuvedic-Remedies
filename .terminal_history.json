@@ -596,7 +596,17 @@
       "command": "git status",
       "timestamp": 1790439740849,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1790439745993,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Migrated whole database from DBsqlite to MySQL \"",
+      "timestamp": 1790439849153,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1790439740849
+  "lastUpdated": 1790439849153
 }
