@@ -606,7 +606,22 @@
       "command": "git commit -m \"Migrated whole database from DBsqlite to MySQL \"",
       "timestamp": 1790439849153,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1790441177832,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Added Bypass condition for Django's hard requirnment for 8.4 so 8.0 works seemlessly\"",
+      "timestamp": 1790441325249,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1790441334190,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1790439849153
+  "lastUpdated": 1790441334190
 }

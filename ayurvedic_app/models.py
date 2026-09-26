@@ -25,4 +25,4 @@ class remedies(models.Model):
     video = models.FileField(upload_to = "videos/")
     Benefits = models.TextField()
     uploaded_at = models.DateTimeField(auto_now_add = True)
-    status = models.TextField(default='PENDING')
+    status = models.CharField(max_length=50, default='PENDING')
