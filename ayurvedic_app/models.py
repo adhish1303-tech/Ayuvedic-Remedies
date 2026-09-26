@@ -8,7 +8,7 @@ class login_cred(models.Model):
 class Register(models.Model):
     Name = models.TextField()
     Email = models.EmailField()
-    Contact = models.IntegerField()
+    Contact = models.CharField(max_length=15)
     Password = models.TextField()
 
 class admin(models.Model):
