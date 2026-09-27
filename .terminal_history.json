@@ -691,7 +691,22 @@
       "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_0gy8e7.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_0gy8e7.ps1\" -ErrorAction SilentlyContinue",
       "timestamp": 1790510945618,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1790511325390,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Recplaced services page to Remedies page in mydashboard\"",
+      "timestamp": 1790511379355,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1790511391439,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1790510945618
+  "lastUpdated": 1790511391439
 }
