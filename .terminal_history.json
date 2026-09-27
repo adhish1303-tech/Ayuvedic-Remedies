@@ -706,7 +706,37 @@
       "command": "git push",
       "timestamp": 1790511391439,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1790529514822,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"removed my mail id \"",
+      "timestamp": 1790529533585,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1790529541125,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "pip install python-dotenv",
+      "timestamp": 1790530220965,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1790530552677,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git status",
+      "timestamp": 1790530563799,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1790511391439
+  "lastUpdated": 1790530563799
 }

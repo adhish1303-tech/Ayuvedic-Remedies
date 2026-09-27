@@ -1,0 +1,33 @@
+# Environment & Secret files (CRITICAL: Prevents leaks)
+.env
+.env.*
+*.env
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+
+# SQLite (if used locally)
+*.sqlite3
+db.sqlite3
+
+# Local Media files (uploaded user content)
+media/
+
+# IDE & Editor settings
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
