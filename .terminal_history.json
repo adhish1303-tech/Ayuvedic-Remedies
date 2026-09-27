@@ -661,7 +661,37 @@
       "command": "C:\\Python313\\python.exe manage.py migrate",
       "timestamp": 1790448694485,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1790448698435,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"in models.py models.IntegerField to models.CharField\"",
+      "timestamp": 1790448702544,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1790448709353,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_wxxxcw.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_wxxxcw.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1790510931808,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_aow0v.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_aow0v.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1790510931813,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_0gy8e7.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_0gy8e7.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1790510945618,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1790448694485
+  "lastUpdated": 1790510945618
 }
