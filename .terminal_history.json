@@ -786,7 +786,42 @@
       "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_90m2ju.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_90m2ju.ps1\" -ErrorAction SilentlyContinue",
       "timestamp": 1791465001906,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1791465184459,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Added 'python-dotenv' in the requirements.txt\"",
+      "timestamp": 1791465236273,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1791465245372,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_bg7on.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_bg7on.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1791471587876,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "& \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_60yzig.ps1\"; Remove-Item \"C:\\Users\\Lenovo\\AppData\\Local\\Temp\\wshist_60yzig.ps1\" -ErrorAction SilentlyContinue",
+      "timestamp": 1791471614211,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "pip install cloudinary django-cloudinary-storage",
+      "timestamp": 1791471743310,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "pip freeze > requirements.txt",
+      "timestamp": 1791471761336,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1791465001906
+  "lastUpdated": 1791471761336
 }
