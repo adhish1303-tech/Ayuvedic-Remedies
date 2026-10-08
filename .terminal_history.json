@@ -821,7 +821,22 @@
       "command": "pip freeze > requirements.txt",
       "timestamp": 1791471761336,
       "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git add .",
+      "timestamp": 1791472151199,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git commit -m \"Configured Cloudinary for remote media uploads\"",
+      "timestamp": 1791472199532,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
+    },
+    {
+      "command": "git push",
+      "timestamp": 1791472207808,
+      "cwd": "c:\\Python313\\Scripts\\ayurveda"
     }
   ],
-  "lastUpdated": 1791471761336
+  "lastUpdated": 1791472207808
 }
